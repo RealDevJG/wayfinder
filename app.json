@@ -4,11 +4,11 @@
 		"slug": "Wayfinder",
 		"version": "1.0.0",
 		"orientation": "portrait",
-		"icon": "./resource/assets/icon.png",
+		"icon": "./resources/assets/icon.png",
 		"userInterfaceStyle": "light",
 		"newArchEnabled": true,
 		"splash": {
-			"image": "./resource/assets/splash-icon.png",
+			"image": "./resources/assets/splash-icon.png",
 			"resizeMode": "contain",
 			"backgroundColor": "#ffffff"
 		},
@@ -17,14 +17,14 @@
 		},
 		"android": {
 			"adaptiveIcon": {
-				"foregroundImage": "./resource/assets/adaptive-icon.png",
+				"foregroundImage": "./resources/assets/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
 			},
 			"edgeToEdgeEnabled": true,
 			"predictiveBackGestureEnabled": false
 		},
 		"web": {
-			"favicon": "./resource/assets/favicon.png"
+			"favicon": "./resources/assets/favicon.png"
 		}
 	}
 }
