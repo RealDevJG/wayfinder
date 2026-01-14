@@ -3,7 +3,7 @@
 		"name": "Wayfinder",
 		"slug": "Wayfinder",
 		"version": "1.0.0",
-		"orientation": "portrait",
+		"orientation": "default",
 		"icon": "./resources/assets/icon.png",
 		"userInterfaceStyle": "light",
 		"newArchEnabled": true,

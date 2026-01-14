@@ -1,0 +1,22 @@
+export const appColourPalette = {
+	statusBar: "#939AFF",
+	background: "#CFD7FF",
+	primary: "#A9B0FF",
+	secondary: "#BFC4FF",
+	accent: "#007FFF",
+	primaryDarker: "#9CA3EC",
+	secondaryDarker: "#B0B7D8",
+	accentDarker: "#0073e6",
+	surfaceColour: "#70C0B3",
+	text: "#000000",
+	altText: "#D6E2FF",
+	linkText: "#247BA0",
+	separator: "#003D75",
+	disabled: "#CACACA",
+	projectIdea: "#FCFA7B",
+	projectResting: "#80A8FF",
+	projectMidFeature: "#fcaf7b",
+	projectOnHold: "#000000",
+	projectCompleted: "#B0FA92",
+	projectDiscontinued: "#FF4F4F"
+}
