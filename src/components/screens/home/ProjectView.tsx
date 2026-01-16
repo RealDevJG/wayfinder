@@ -30,24 +30,22 @@ function getStyleAndTag(status: ProjectStatus) {
     }
 }
 
-const ProjectView = React.memo<ProjectViewProps>(
-    ({ uuid, title, summary, status, lastActive, styles }) => {
-        const { statusTag, statusStyle } = getStyleAndTag(status);
+const ProjectView = React.memo<ProjectViewProps>(({ uuid, title, summary, status, lastActive, styles }) => {
+    const { statusTag, statusStyle } = getStyleAndTag(status);
 
-        return (
-            <Pressable key={uuid} style={styles.container} onPress={() => alert(`You pressed ${title}`)}>
-                <Text style={[styles.titleText, styles.infoContainer]}>{title}</Text>
-                <Text style={[styles.summaryText, styles.infoContainer]}>{summary}</Text>
-                <View style={[styles.statusContainer, styles.infoContainer]}>
-                    <View style={styles.statusContainer}>
-                        <View style={[statusStyle, styles.statusIcon]}></View>
-                        <Text style={styles.statusText}>{statusTag}</Text>
-                    </View>
-                    <Text style={styles.statusText}>Last Active: {lastActive}</Text>
+    return (
+        <Pressable key={uuid} style={styles.container} onPress={() => alert(`You pressed ${title}`)}>
+            <Text style={[styles.titleText, styles.infoContainer]}>{title}</Text>
+            <Text style={[styles.summaryText, styles.infoContainer]}>{summary}</Text>
+            <View style={[styles.statusContainer, styles.infoContainer]}>
+                <View style={styles.statusContainer}>
+                    <View style={[statusStyle, styles.statusIcon]}></View>
+                    <Text style={styles.statusText}>{statusTag}</Text>
                 </View>
-            </Pressable>
-        );
-    }
-);
+                <Text style={styles.statusText}>Last Active: {lastActive}</Text>
+            </View>
+        </Pressable>
+    );
+});
 
 export default ProjectView;

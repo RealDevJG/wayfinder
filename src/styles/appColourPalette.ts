@@ -4,10 +4,11 @@ export const appColourPalette = {
 	primary: "#A9B0FF",
 	secondary: "#BFC4FF",
 	accent: "#007FFF",
+	danger: "#FF4141",
 	primaryDarker: "#9CA3EC",
 	secondaryDarker: "#B0B7D8",
 	accentDarker: "#0073e6",
-	surfaceColour: "#70C0B3",
+	dangerDarker: "#E23A3A",
 	text: "#000000",
 	altText: "#D6E2FF",
 	linkText: "#247BA0",
@@ -17,6 +18,6 @@ export const appColourPalette = {
 	projectResting: "#80A8FF",
 	projectMidFeature: "#fcaf7b",
 	projectOnHold: "#000000",
-	projectCompleted: "#B0FA92",
+	projectCompleted: "#7ae051",
 	projectDiscontinued: "#FF4F4F"
 }
