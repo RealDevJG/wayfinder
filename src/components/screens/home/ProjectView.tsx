@@ -13,23 +13,6 @@ interface ProjectViewProps {
     styles: ProjectViewStyles;
 }
 
-function getStyleAndTag(status: ProjectStatus) {
-    switch (status) {
-        case ProjectStatus.Idea:
-            return { statusTag: "Idea", statusStyle: { backgroundColor: appColourPalette.projectIdea }};
-        case ProjectStatus.Resting:
-            return { statusTag: "Resting", statusStyle: { backgroundColor: appColourPalette.projectResting }};
-        case ProjectStatus.MidFeature:
-            return { statusTag: "Mid-Feature", statusStyle: { backgroundColor: appColourPalette.projectMidFeature }};
-        case ProjectStatus.OnHold:
-            return { statusTag: "On-Hold", statusStyle: { backgroundColor: appColourPalette.projectOnHold }};
-        case ProjectStatus.Completed:
-            return { statusTag: "Completed", statusStyle: { backgroundColor: appColourPalette.projectCompleted }};
-        default:
-            return { statusTag: "Discontinued", statusStyle: { backgroundColor: appColourPalette.projectDiscontinued }};
-    }
-}
-
 const ProjectView = React.memo<ProjectViewProps>(({ uuid, title, summary, status, lastActive, styles }) => {
     const { statusTag, statusStyle } = getStyleAndTag(status);
 
@@ -47,5 +30,19 @@ const ProjectView = React.memo<ProjectViewProps>(({ uuid, title, summary, status
         </Pressable>
     );
 });
+
+const statusStyles = {
+    [ProjectStatus.Idea]: appColourPalette.projectIdea,
+    [ProjectStatus.Resting]: appColourPalette.projectResting,
+    [ProjectStatus.MidFeature]: appColourPalette.projectMidFeature,
+    [ProjectStatus.OnHold]: appColourPalette.projectOnHold,
+    [ProjectStatus.Completed]: appColourPalette.projectCompleted,
+    [ProjectStatus.Discontinued]: appColourPalette.projectDiscontinued
+} as const;
+
+function getStyleAndTag(statusTag: ProjectStatus) {
+    const statusStyle = { backgroundColor: statusStyles[statusTag] };
+    return { statusTag, statusStyle };
+}
 
 export default ProjectView;

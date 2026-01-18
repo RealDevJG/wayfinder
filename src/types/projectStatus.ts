@@ -1,8 +1,8 @@
 export enum ProjectStatus {
-	Idea,
-	Resting,
-	MidFeature,
-	OnHold,
-	Completed,
-	Discontinued
+	Idea = "Idea",
+	Resting = "Resting",
+	MidFeature = "Mid-Feature",
+	OnHold = "On-Hold",
+	Completed = "Completed",
+	Discontinued = "Discontinued"
 }
