@@ -6,7 +6,7 @@ export const appColourPalette = {
 	accent: "#007FFF",
 	danger: "#FF4141",
 	primaryDarker: "#9CA3EC",
-	secondaryDarker: "#B0B7D8",
+	secondaryDarker: "#b2b8f5",
 	accentDarker: "#0073e6",
 	dangerDarker: "#E23A3A",
 	text: "#000000",

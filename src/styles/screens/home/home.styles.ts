@@ -1,8 +1,8 @@
-import { StyleSheet } from "react-native";
-import { appColourPalette } from "../../appColourPalette";
 import { useMemo } from "react";
-import { useScreenDimensions } from "../../../hooks/useScreenDimensions";
+import { StyleSheet } from "react-native";
 import { EdgeInsets } from "react-native-safe-area-context";
+import { useScreenDimensions } from "../../../hooks/useScreenDimensions";
+import { appColourPalette } from "../../appColourPalette";
 
 export const useStaticHomeStyles = () => {
 	return staticHomeStyles;
@@ -34,17 +34,6 @@ export const useDynamicHomeStyles = (insets: EdgeInsets) => {
 };
 
 const staticHomeStyles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: appColourPalette.background,
-		alignItems: "center",
-		justifyContent: "center",
-		marginTop: 0
-	},
-	projectListContainer: {
-		flex: 9,
-		width: "100%"
-	},
 	projectListScrollView: {
 		backgroundColor: appColourPalette.background
 	},

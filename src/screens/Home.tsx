@@ -8,21 +8,23 @@ import { useHomeProjectViewStyles } from "../styles/screens/home/home.projectVie
 import CustomHeader from "../components/foundational/CustomHeader";
 import NewProjectModal from "../components/screens/home/NewProjectModal";
 import { useState } from "react";
+import { useStaticGlobalStyles } from "../styles/global.styles";
 
 export default function Home() {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
     const insets = useSafeAreaInsets();
 
+    const globalStyles = useStaticGlobalStyles();
     const staticStyles = useStaticHomeStyles();
     const dynamicStyles = useDynamicHomeStyles(insets);
     const projectViewStyles = useHomeProjectViewStyles();
 
     return (
-        <SafeAreaView style={staticStyles.container}>
+        <SafeAreaView style={globalStyles.appContainer}>
             <CustomHeader title="Wayfinder" showBackButton={false} />
             {/* The below View allows for the inner ScrollView to use flex properly */}
-            <View style={staticStyles.projectListContainer}>
+            <View style={globalStyles.contentContainer}>
                 <ScrollView style={staticStyles.projectListScrollView}>
                     {tempProjects.map((project, index) => (
                         <ProjectView

@@ -1,6 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
-import AppNavigator from "./AppNavigation";
+import * as WebBrowser from "expo-web-browser";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import AppNavigator from "./AppNavigation";
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function App() {
 	return (

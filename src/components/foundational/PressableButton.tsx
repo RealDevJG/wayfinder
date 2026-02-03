@@ -16,8 +16,8 @@ interface PressableButtonProps {
 }
 
 const PressableButton: React.FC<PressableButtonProps> = (
-		{ children, onPress, onLongPress, onPressIn, longPressDelay, disabled, style, disabledStyleOverride, buttonDownStyleOverride, buttonUpStyleOverride }
-	) => {
+	{ children, onPress, onLongPress, onPressIn, longPressDelay, disabled, style, disabledStyleOverride, buttonDownStyleOverride, buttonUpStyleOverride }
+) => {
 	const globalStyles = useStaticGlobalStyles();
 
 	return (

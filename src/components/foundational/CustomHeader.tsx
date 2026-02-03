@@ -1,6 +1,6 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { appColourPalette } from "../../styles/appColourPalette";
 
 interface CustomHeaderProps {
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     headerTitleText: {
         color: appColourPalette.text,
         textAlign: "center",
-        fontSize: 28,
+        fontSize: 24,
         fontWeight: 400
     }
 });

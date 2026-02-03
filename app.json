@@ -2,6 +2,7 @@
 	"expo": {
 		"name": "Wayfinder",
 		"slug": "Wayfinder",
+		"scheme": "wayfinder",
 		"version": "1.0.0",
 		"orientation": "default",
 		"icon": "./resources/assets/icon.png",
