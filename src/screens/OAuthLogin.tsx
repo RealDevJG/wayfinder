@@ -4,6 +4,8 @@ import * as SecureStore from "expo-secure-store";
 import * as WebBrowser from "expo-web-browser";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { WAYFINDER_API_CLIENT } from "../api/clients";
+import { clearUser, getUser } from "../auth/user.repository";
 import { login, refreshTokens } from "../auth/user.service";
 import CustomHeader from "../components/foundational/CustomHeader";
 import PressableButton from "../components/foundational/PressableButton";
@@ -12,7 +14,6 @@ import { useStaticGlobalStyles } from "../styles/global.styles";
 import { useStaticOAuthLoginStyles } from "../styles/screens/oauthlogin/oauthlogin.styles";
 import { LoginUser } from "../types/loginUser";
 import { API_URL, secureStoreKeys } from "../utils/constants";
-import { clearUser, getUser } from "../auth/user.repository";
 
 const googleImage = require("../../resources/assets/images/OAuth/google-logo.png");
 
@@ -37,16 +38,12 @@ export default function OAuthLogin() {
         if (result.type === "success") {
             const code = new URL(result.url).searchParams.get("code");
 
-            const response = await fetch(`${API_URL}/auth/exchange`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ code })
-            });
-
-            if (response.ok) {
-                const user: LoginUser = await response.json();
+            WAYFINDER_API_CLIENT.post("/auth/exchange", { code }).then(async (res) => {
+                const user: LoginUser = await res.data
                 await login(user);
-            }
+            }).catch((err) => {
+                console.log(err);
+            });
         }
     }
 
@@ -55,23 +52,18 @@ export default function OAuthLogin() {
         const accessToken = await SecureStore.getItemAsync(secureStoreKeys.accessToken);
         const refreshToken = await SecureStore.getItemAsync(secureStoreKeys.refreshToken);
 
-        console.log(`accessToken ${accessToken}\nrefreshToken ${refreshToken}`);
+        console.log(`\naccessToken ${accessToken}\nrefreshToken ${refreshToken}`);
     }
 
     // TEMP FUNCTION
     async function logout() {
         const user = await getUser();
-        const accessToken = await SecureStore.getItemAsync(secureStoreKeys.accessToken);
 
-        const response = await fetch(`${API_URL}/auth/logout`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${accessToken}` },
-            body: JSON.stringify({ userId: user.userId })
-        });
-
-        if (response.ok) {
+        await WAYFINDER_API_CLIENT.post(`${API_URL}/auth/logout`, { userId: user.id }).then(async () => {
             await clearUser();
-        }
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
     // // TODO: remove if not needed with wayfinder:// deep linking scheme

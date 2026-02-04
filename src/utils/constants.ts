@@ -15,3 +15,7 @@ export const asyncStorageKeys = {
 } as const;
 
 export const API_URL = "https://devjg.duckdns.org/api";
+export const AXIOS_CONFIG = {
+	baseURL: API_URL,
+	timeout: 5000
+};

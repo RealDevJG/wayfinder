@@ -6,10 +6,10 @@ import { User } from "../types/user";
 
 // TODO: remove "as strings" and replace with proper null checking
 export async function getUser(): Promise<User> {
-	const userId = (await AsyncStorage.getItem(asyncStorageKeys.userId)) as string;
+	const id = (await AsyncStorage.getItem(asyncStorageKeys.userId)) as string;
 	const username = (await AsyncStorage.getItem(asyncStorageKeys.username)) as string;
 
-	return { userId, username };
+	return { id, username };
 }
 
 export async function setUser(user: LoginUser) {
