@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
 import { LoginUser } from "../types/loginUser";
 import { asyncStorageKeys, SecureStoreTokens, secureStoreKeys } from "../utils/constants";
+import { User } from "../types/user";
 
 // TODO: remove "as strings" and replace with proper null checking
 export async function getUser(): Promise<User> {

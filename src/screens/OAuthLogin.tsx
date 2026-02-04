@@ -12,6 +12,7 @@ import { useStaticGlobalStyles } from "../styles/global.styles";
 import { useStaticOAuthLoginStyles } from "../styles/screens/oauthlogin/oauthlogin.styles";
 import { LoginUser } from "../types/loginUser";
 import { API_URL, secureStoreKeys } from "../utils/constants";
+import { clearUser, getUser } from "../auth/user.repository";
 
 const googleImage = require("../../resources/assets/images/OAuth/google-logo.png");
 
@@ -57,7 +58,23 @@ export default function OAuthLogin() {
         console.log(`accessToken ${accessToken}\nrefreshToken ${refreshToken}`);
     }
 
-    // TODO: remove if not needed with wayfinder:// deep linking scheme
+    // TEMP FUNCTION
+    async function logout() {
+        const user = await getUser();
+        const accessToken = await SecureStore.getItemAsync(secureStoreKeys.accessToken);
+
+        const response = await fetch(`${API_URL}/auth/logout`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${accessToken}` },
+            body: JSON.stringify({ userId: user.userId })
+        });
+
+        if (response.ok) {
+            await clearUser();
+        }
+    }
+
+    // // TODO: remove if not needed with wayfinder:// deep linking scheme
     // useEffect(() => {
     //     const sub = Linking.addEventListener("url", ({ url }) => {
     //         const { queryParams } = Linking.parse(url);
@@ -82,6 +99,9 @@ export default function OAuthLogin() {
                 </PressableButton>
                 <PressableButton onPress={refreshTokens}>
                     <Text style={styles.homeButtonText}>REFRESH TOKENS</Text>
+                </PressableButton>
+                <PressableButton onPress={logout}>
+                    <Text style={styles.homeButtonText}>LOG OUT</Text>
                 </PressableButton>
             </View>
             <PressableButton style={styles.homeButtonView} buttonUpStyleOverride={styles.homeButtonUp} buttonDownStyleOverride={styles.homeButtonDown} onPress={gotoHomescreen}>
