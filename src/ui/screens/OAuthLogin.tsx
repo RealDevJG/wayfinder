@@ -4,18 +4,18 @@ import * as SecureStore from "expo-secure-store";
 import * as WebBrowser from "expo-web-browser";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { WAYFINDER_API_CLIENT } from "../api/clients";
-import { clearUser, getUser } from "../auth/user.repository";
-import { login, refreshTokens } from "../auth/user.service";
+import { LoginUser } from "../../common/types/loginUser";
+import { API_URL, secureStoreKeys } from "../../common/utils/constants";
+import { WAYFINDER_API_CLIENT } from "../../core/api/axios/clients";
+import { clearUser, getUser } from "../../core/auth/user.repository";
+import { login, refreshTokens } from "../../core/auth/user.service";
 import CustomHeader from "../components/foundational/CustomHeader";
 import PressableButton from "../components/foundational/PressableButton";
 import OAuthLoginView from "../components/screens/oauthlogin/OAuthLoginView";
 import { useStaticGlobalStyles } from "../styles/global.styles";
 import { useStaticOAuthLoginStyles } from "../styles/screens/oauthlogin/oauthlogin.styles";
-import { LoginUser } from "../types/loginUser";
-import { API_URL, secureStoreKeys } from "../utils/constants";
 
-const googleImage = require("../../resources/assets/images/OAuth/google-logo.png");
+const googleImage = require("../../../resources/assets/images/OAuth/google-logo.png");
 
 export default function OAuthLogin() {
     const navigation = useNavigation<any>();

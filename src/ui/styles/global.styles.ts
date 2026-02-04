@@ -8,12 +8,12 @@ export const useStaticGlobalStyles = () => {
 const button = {
 	padding: 10,
 	borderRadius: 5
-}
+};
 
 const circularButton = {
 	...button,
 	borderRadius: "100%"
-}
+};
 
 const staticGlobalStyles = StyleSheet.create({
 	button,
@@ -28,17 +28,17 @@ const staticGlobalStyles = StyleSheet.create({
 		backgroundColor: appColourPalette.disabled
 	},
 	appContainer: {
-        flex: 1,
-        backgroundColor: appColourPalette.background,
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 0
-    },
-    contentContainer: {
-        flex: 11,
-        width: "100%",
-        height: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-    }
+		flex: 1,
+		backgroundColor: appColourPalette.background,
+		alignItems: "center",
+		justifyContent: "center",
+		marginTop: 0
+	},
+	contentContainer: {
+		flex: 11,
+		width: "100%",
+		height: "100%",
+		justifyContent: "center",
+		alignItems: "center"
+	}
 });

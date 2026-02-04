@@ -30,7 +30,7 @@ const staticProjectViewStyles: ProjectViewStyles = StyleSheet.create({
 	statusContainer: {
 		flexDirection: "row",
 		alignItems: "center",
-		justifyContent: "space-between",
+		justifyContent: "space-between"
 	},
 	statusIcon: {
 		width: 12,

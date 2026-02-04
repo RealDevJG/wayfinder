@@ -1,6 +1,6 @@
-import { getJwtToken } from "../auth/user.repository";
-import { refreshTokens } from "../auth/user.service";
-import { secureStoreKeys } from "../utils/constants";
+import { secureStoreKeys } from "../../../common/utils/constants";
+import { getJwtToken } from "../../auth/user.repository";
+import { refreshTokens } from "../../auth/user.service";
 import { WAYFINDER_API_CLIENT } from "./clients";
 
 let refreshPromise: Promise<void | null> | null = null;

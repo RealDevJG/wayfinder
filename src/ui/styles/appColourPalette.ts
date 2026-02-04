@@ -20,4 +20,4 @@ export const appColourPalette = {
 	projectOnHold: "#000000",
 	projectCompleted: "#7ae051",
 	projectDiscontinued: "#FF4F4F"
-}
+};

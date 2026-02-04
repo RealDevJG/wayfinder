@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native"
-import CustomModal from "../../foundational/CustomModal";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { appColourPalette } from "../../../styles/appColourPalette";
+import CustomModal from "../../foundational/CustomModal";
 import PressableButton from "../../foundational/PressableButton";
 
 interface NewProjectModalProps {

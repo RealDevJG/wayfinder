@@ -1,8 +1,8 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
+import { ProjectStatus } from "../../../../common/types/projectStatus";
 import { appColourPalette } from "../../../styles/appColourPalette";
 import { ProjectViewStyles } from "../../../styles/screens/home/home.projectView.styles";
-import { ProjectStatus } from "../../../types/projectStatus";
 
 interface ProjectViewProps {
     uuid: string;

@@ -1,14 +1,14 @@
+import { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import PressableButton from "../components/foundational/PressableButton";
-import ProjectView from "../components/screens/home/ProjectView";
-import { useDynamicHomeStyles, useStaticHomeStyles } from "../styles/screens/home/home.styles";
-import { ProjectStatus } from "../types/projectStatus";
-import { useHomeProjectViewStyles } from "../styles/screens/home/home.projectView.styles";
+import { ProjectStatus } from "../../common/types/projectStatus";
 import CustomHeader from "../components/foundational/CustomHeader";
+import PressableButton from "../components/foundational/PressableButton";
 import NewProjectModal from "../components/screens/home/NewProjectModal";
-import { useState } from "react";
+import ProjectView from "../components/screens/home/ProjectView";
 import { useStaticGlobalStyles } from "../styles/global.styles";
+import { useHomeProjectViewStyles } from "../styles/screens/home/home.projectView.styles";
+import { useDynamicHomeStyles, useStaticHomeStyles } from "../styles/screens/home/home.styles";
 
 export default function Home() {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);

@@ -1,7 +1,7 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import Home from "./screens/Home";
-import OAuthLogin from "./screens/OAuthLogin";
+import Home from "./ui/screens/Home";
+import OAuthLogin from "./ui/screens/OAuthLogin";
 
 const Stack = createNativeStackNavigator();
 

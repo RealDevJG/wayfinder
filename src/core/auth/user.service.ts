@@ -1,7 +1,7 @@
-import { WAYFINDER_REFRESH_API_CLIENT } from "../api/clients";
-import { LoginTokens } from "../types/loginTokens";
-import { LoginUser } from "../types/loginUser";
-import { secureStoreKeys } from "../utils/constants";
+import { LoginTokens } from "../../common/types/loginTokens";
+import { LoginUser } from "../../common/types/loginUser";
+import { secureStoreKeys } from "../../common/utils/constants";
+import { WAYFINDER_REFRESH_API_CLIENT } from "../api/axios/clients";
 import { clearUser, getJwtToken, getUser, setUser, updateJwtTokens } from "./user.repository";
 
 export async function login(user: LoginUser) {

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Modal, StyleSheet, ColorValue, Pressable } from "react-native";
+import { ColorValue, Modal, Pressable, StyleSheet } from "react-native";
 
 interface CustomModalProps {
     children: ReactNode;
