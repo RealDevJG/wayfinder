@@ -5,19 +5,19 @@ export const useStaticGlobalStyles = () => {
 	return staticGlobalStyles;
 };
 
-const button = {
-	padding: 10,
+const buttonView = {
+	padding: 4,
 	borderRadius: 5
 };
 
-const circularButton = {
-	...button,
+const circularButtonView = {
+	...buttonView,
 	borderRadius: "100%"
 };
 
 const staticGlobalStyles = StyleSheet.create({
-	button,
-	circularButton,
+	button: buttonView,
+	circularButton: circularButtonView,
 	buttonUp: {
 		backgroundColor: appColourPalette.accent
 	},
@@ -40,5 +40,24 @@ const staticGlobalStyles = StyleSheet.create({
 		height: "100%",
 		justifyContent: "center",
 		alignItems: "center"
+	},
+	bannerButtonView: {
+		width: "100%",
+		alignItems: "center",
+		padding: 4,
+		borderTopWidth: 1,
+		borderBottomWidth: 1,
+		borderTopColor: appColourPalette.separator,
+		borderBottomColor: appColourPalette.separator
+	},
+	bannerButtonUp: {
+		backgroundColor: appColourPalette.primary
+	},
+	bannerButtonDown: {
+		backgroundColor: appColourPalette.primaryDarker
+	},
+	bannerButtonText: {
+		color: appColourPalette.text,
+		fontSize: 16
 	}
 });

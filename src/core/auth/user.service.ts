@@ -1,25 +1,47 @@
-import { LoginTokens } from "../../common/types/loginTokens";
-import { LoginUser } from "../../common/types/loginUser";
-import { secureStoreKeys } from "../../common/utils/constants";
-import { WAYFINDER_REFRESH_API_CLIENT } from "../api/axios/clients";
-import { clearUser, getJwtToken, getUser, setUser, updateJwtTokens } from "./user.repository";
+import { AuthInfo } from "../../common/types/authInfo";
+import { AuthenticatedUser } from "../../common/types/authenticatedUser";
+import { API_URL, secureStoreKeys } from "../../common/utils/constants";
+import { useUserStore } from "../../state/zustand/userStore";
+import { WAYFINDER_API_CLIENT, WAYFINDER_REFRESH_API_CLIENT } from "../api/axios/clients";
+import { UserRepository } from "./user.repository";
 
-export async function login(user: LoginUser) {
-	await setUser(user);
-	// TODO: set user in zustand DO NOT PUT REFRESH TOKEN, SO CONSTRUCT NEW USER
-}
+export namespace UserService {
+	export async function login(code: string) {
+		WAYFINDER_API_CLIENT.post("/auth/exchange", { code }).then(async (res) => {
+			const user: AuthenticatedUser = await res.data;
+			await UserRepository.setUser(user);
 
-export async function logout() {
-	await clearUser();
-	// TODO: clear user from zustand
-}
+			const accessToken = await UserRepository.getJwtToken(secureStoreKeys.accessToken);
+			useUserStore.getState().login(user, { accessToken });
+		});
+	}
 
-export async function refreshTokens() {
-	const user = await getUser();
-	const refreshToken = await getJwtToken(secureStoreKeys.refreshToken);
+	export async function logout() {
+		const user = useUserStore.getState().user;
 
-	return WAYFINDER_REFRESH_API_CLIENT.post("/auth/refresh", { userId: user.id, refreshToken }).then(async (res) => {
-		const newTokens: LoginTokens = await res.data;
-		await updateJwtTokens(newTokens.accessToken, newTokens.refreshToken);
-	});
+		if (!user) {
+			return;
+		}
+
+		await WAYFINDER_API_CLIENT.post(`${API_URL}/auth/logout`, { userId: user.userId }).then(async () => {
+			await UserRepository.clearUser();
+			useUserStore.getState().logout();
+		});
+	}
+
+	export async function refreshTokens(): Promise<void | null> {
+		const user = useUserStore.getState().user;
+		const refreshToken = await UserRepository.getJwtToken(secureStoreKeys.refreshToken);
+
+		if (!user) {
+			return null;
+		}
+
+		return WAYFINDER_REFRESH_API_CLIENT.post("/auth/refresh", { userId: user.userId, refreshToken }).then(async (res) => {
+			const { accessToken, refreshToken }: AuthInfo = await res.data;
+
+			useUserStore.getState().setTokenInfo({ accessToken });
+			await UserRepository.updateJwtTokens(accessToken, refreshToken);
+		});
+	}
 }

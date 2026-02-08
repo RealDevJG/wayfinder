@@ -25,10 +25,10 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({ isVisible, onClose })
                 <TextInput style={[styles.textInput, styles.summaryTextInput]} onChangeText={text => onSummaryChanged(text)} value={summary} multiline numberOfLines={10} editable />
             </View>
             <View style={styles.buttonsContainer}>
-                <PressableButton style={styles.buttons} buttonUpStyleOverride={styles.buttonCancelUp} buttonDownStyleOverride={styles.buttonCancelDown} onPress={onClose}>
+                <PressableButton style={styles.buttons} buttonUpStyle={styles.buttonCancelUp} buttonDownStyle={styles.buttonCancelDown} onPress={onClose}>
                     <Text>Cancel</Text>
                 </PressableButton>
-                <PressableButton style={styles.buttons} buttonUpStyleOverride={styles.buttonAdd}>
+                <PressableButton style={styles.buttons} buttonUpStyle={styles.buttonAdd}>
                     <Text>Add</Text>
                 </PressableButton>
             </View>

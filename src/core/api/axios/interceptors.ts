@@ -1,17 +1,23 @@
 import { secureStoreKeys } from "../../../common/utils/constants";
-import { getJwtToken } from "../../auth/user.repository";
-import { refreshTokens } from "../../auth/user.service";
+import { UserRepository } from "../../auth/user.repository";
+import { UserService } from "../../auth/user.service";
 import { WAYFINDER_API_CLIENT } from "./clients";
 
 let refreshPromise: Promise<void | null> | null = null;
 
-export function setupAxiosInterceptors() {
-	WAYFINDER_API_CLIENT.interceptors.request.use(
-		async (config) => {
-			console.log("Attaching access token");
+type PatchedAxios = typeof WAYFINDER_API_CLIENT & {
+	_requestInterceptorId?: number;
+	_responseInterceptorId?: number;
+};
 
-			// TODO: use zustand to get token
-			const accessToken = await getJwtToken(secureStoreKeys.accessToken);
+export function setupAxiosInterceptors() {
+	const apiClient = WAYFINDER_API_CLIENT as PatchedAxios;
+
+	cleanupInterceptors(apiClient);
+
+	apiClient._requestInterceptorId = WAYFINDER_API_CLIENT.interceptors.request.use(
+		async (config) => {
+			const accessToken = await UserRepository.getJwtToken(secureStoreKeys.accessToken);
 			config.headers.Authorization = `Bearer ${accessToken}`;
 
 			return config;
@@ -19,7 +25,7 @@ export function setupAxiosInterceptors() {
 		(err) => Promise.reject(err)
 	);
 
-	WAYFINDER_API_CLIENT.interceptors.response.use(
+	apiClient._responseInterceptorId = WAYFINDER_API_CLIENT.interceptors.response.use(
 		(res) => res,
 		async (err) => {
 			const original = err.config as any;
@@ -30,14 +36,13 @@ export function setupAxiosInterceptors() {
 
 			original._retry = true;
 
-			refreshPromise ??= refreshTokens().finally(() => {
+			refreshPromise ??= UserService.refreshTokens().finally(() => {
 				refreshPromise = null;
 			});
 
 			await refreshPromise;
 
-			// TODO: replace with zustand to get accessToken
-			const newToken = await getJwtToken(secureStoreKeys.accessToken);
+			const newToken = await UserRepository.getJwtToken(secureStoreKeys.accessToken);
 
 			if (!newToken) {
 				return Promise.reject(err);
@@ -47,4 +52,18 @@ export function setupAxiosInterceptors() {
 			return WAYFINDER_API_CLIENT(original);
 		}
 	);
+
+	return () => cleanupInterceptors(apiClient);
+}
+
+// Fixes bug where hot-reloading causes multiple interceptors to register at once
+function cleanupInterceptors(apiClient: PatchedAxios) {
+	// "!== undefined" is required because IDs start at 0, which is falsey
+	if (apiClient._requestInterceptorId !== undefined) {
+		apiClient.interceptors.request.eject(apiClient._requestInterceptorId);
+	}
+
+	if (apiClient._responseInterceptorId !== undefined) {
+		apiClient.interceptors.response.eject(apiClient._responseInterceptorId);
+	}
 }

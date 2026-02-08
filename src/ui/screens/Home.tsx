@@ -1,7 +1,9 @@
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { ProjectStatus } from "../../common/types/projectStatus";
+import BannerButton from "../components/foundational/BannerButton";
 import CustomHeader from "../components/foundational/CustomHeader";
 import PressableButton from "../components/foundational/PressableButton";
 import NewProjectModal from "../components/screens/home/NewProjectModal";
@@ -13,12 +15,17 @@ import { useDynamicHomeStyles, useStaticHomeStyles } from "../styles/screens/hom
 export default function Home() {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
+    const navigation = useNavigation<any>();
     const insets = useSafeAreaInsets();
 
     const globalStyles = useStaticGlobalStyles();
     const staticStyles = useStaticHomeStyles();
     const dynamicStyles = useDynamicHomeStyles(insets);
     const projectViewStyles = useHomeProjectViewStyles();
+
+    function gotoLoginScreen() {
+        navigation.navigate("OAuthLogin");
+    }
 
     return (
         <SafeAreaView style={globalStyles.appContainer}>
@@ -39,11 +46,13 @@ export default function Home() {
                     ))}
                 </ScrollView>
             </View>
-            <PressableButton style={dynamicStyles.addProjectButton} onPress={() => setIsModalVisible(true)}
-                    buttonUpStyleOverride={staticStyles.addProjectButtonUp} buttonDownStyleOverride={staticStyles.addProjectButtonDown}>
+            <PressableButton style={dynamicStyles.addProjectButton} buttonUpStyle={staticStyles.addProjectButtonUp} buttonDownStyle={staticStyles.addProjectButtonDown} onPress={() => setIsModalVisible(true)}>
                 <Text style={staticStyles.addProjectButtonText}>+</Text>
             </PressableButton>
             <NewProjectModal isVisible={isModalVisible} onClose={() => setIsModalVisible(false)} />
+            <BannerButton onPress={gotoLoginScreen}>
+                <Text style={globalStyles.bannerButtonText}>LOGIN</Text>
+            </BannerButton>
         </SafeAreaView>
     );
 }

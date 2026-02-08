@@ -22,7 +22,7 @@ export const useDynamicHomeStyles = (insets: EdgeInsets) => {
 				borderWidth: 2,
 				position: "absolute",
 				right: insets.right,
-				bottom: insets.bottom,
+				bottom: insets.bottom + 5,
 				margin: 30,
 				width: addProjectTextSize,
 				height: addProjectTextSize,
@@ -44,10 +44,10 @@ const staticHomeStyles = StyleSheet.create({
 	},
 	addProjectButtonUp: {
 		backgroundColor: appColourPalette.accent,
-		opacity: 0.8
+		opacity: 0.82
 	},
 	addProjectButtonDown: {
 		backgroundColor: appColourPalette.accentDarker,
-		opacity: 0.8
+		opacity: 0.82
 	}
 });

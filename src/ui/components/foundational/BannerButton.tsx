@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { Pressable, StyleProp, ViewStyle } from "react-native";
 import { useStaticGlobalStyles } from "../../styles/global.styles";
 
-interface PressableButtonProps {
+interface BannerButtonProps {
 	children?: ReactNode;
 	onPress?: () => void;
 	onLongPress?: () => void;
@@ -15,20 +15,20 @@ interface PressableButtonProps {
 	buttonUpStyle?: StyleProp<ViewStyle>;
 }
 
-const PressableButton: React.FC<PressableButtonProps> = (
+const BannerButton: React.FC<BannerButtonProps> = (
 	{ children, onPress, onLongPress, onPressIn, longPressDelay, disabled, style, disabledStyle: disabledStyleOverride, buttonDownStyle: buttonDownStyleOverride, buttonUpStyle: buttonUpStyleOverride }
 ) => {
 	const globalStyles = useStaticGlobalStyles();
 
 	return (
 		<Pressable onPress={onPress} onLongPress={onLongPress} onPressIn={onPressIn} delayLongPress={longPressDelay} disabled={disabled} style={({ pressed }) => [
-			style ?? globalStyles.button,
+			style ?? globalStyles.bannerButtonView,
 			disabled ? (disabledStyleOverride ?? globalStyles.disabledButton)
-				: pressed ? (buttonDownStyleOverride ?? globalStyles.buttonDown) : (buttonUpStyleOverride ?? globalStyles.buttonUp)
+				: pressed ? (buttonDownStyleOverride ?? globalStyles.bannerButtonDown) : (buttonUpStyleOverride ?? globalStyles.bannerButtonUp)
 		]}>
 			{children}
 		</Pressable>
 	);
 };
 
-export default PressableButton;
+export default BannerButton;
