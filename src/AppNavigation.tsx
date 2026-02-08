@@ -8,7 +8,7 @@ const Stack = createNativeStackNavigator();
 export default function AppNavigator() {
     return (
         <SafeAreaProvider>
-            <Stack.Navigator initialRouteName="OAuthLogin">
+            <Stack.Navigator initialRouteName="Home">
                 <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
                 <Stack.Screen name="OAuthLogin" component={OAuthLogin} options={{ headerShown: false }} />
             </Stack.Navigator>
