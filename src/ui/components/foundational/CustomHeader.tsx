@@ -6,8 +6,8 @@ import { appColourPalette } from "../../styles/appColourPalette";
 import PressableButton from "./PressableButton";
 
 // TODO: make profileIcon passable so other icons can be in the top right as well
-const backIcon = require("../../../../resources/assets/images/Global/back-icon.png");
-const profileIcon = require("../../../../resources/assets/images/Global/profile-icon.png");
+const backIcon = require("../../../../resources/assets/images/global/back-icon.png");
+const profileIcon = require("../../../../resources/assets/images/global/profile-icon.png");
 
 interface CustomHeaderProps {
     title: string,
@@ -48,7 +48,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, showBackButton = tru
     );
 }
 
-const headerButtonSize = 30;
+const headerButtonSize = 34;
 
 const styles = StyleSheet.create({
     headerContainer: {

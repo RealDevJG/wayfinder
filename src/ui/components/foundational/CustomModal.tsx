@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { ColorValue, Modal, Pressable, StyleSheet } from "react-native";
 
 interface CustomModalProps {

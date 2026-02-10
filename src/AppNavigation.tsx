@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Home from "./ui/screens/Home";
 import OAuthLogin from "./ui/screens/OAuthLogin";

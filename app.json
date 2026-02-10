@@ -1,31 +1,41 @@
 {
-	"expo": {
-		"name": "Wayfinder",
-		"slug": "Wayfinder",
-		"scheme": "wayfinder",
-		"version": "1.0.0",
-		"orientation": "default",
-		"icon": "./resources/assets/icon.png",
-		"userInterfaceStyle": "light",
-		"newArchEnabled": true,
-		"splash": {
-			"image": "./resources/assets/splash-icon.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#ffffff"
-		},
-		"ios": {
-			"supportsTablet": true
-		},
-		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./resources/assets/adaptive-icon.png",
-				"backgroundColor": "#ffffff"
-			},
-			"edgeToEdgeEnabled": true,
-			"predictiveBackGestureEnabled": false
-		},
-		"web": {
-			"favicon": "./resources/assets/favicon.png"
-		}
-	}
+  "expo": {
+    "name": "Wayfinder",
+    "slug": "Wayfinder",
+    "scheme": "wayfinder",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./resources/assets/images/branding/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./resources/assets/images/branding/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#00ceff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./resources/assets/images/branding/adaptive-icon.png",
+        "backgroundColor": "#00ceff"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "com.realdevjg.Wayfinder"
+    },
+    "androidStatusBar": {
+      "translucent": false
+    },
+    "web": {
+      "favicon": "./resources/assets/images/branding/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "01b7ed55-ea7b-46db-b841-84d5e72ec812"
+      }
+    },
+    "owner": "realdevjg"
+  }
 }
