@@ -1,6 +1,6 @@
 import { AuthInfo } from "../../common/types/authInfo";
 import { AuthenticatedUser } from "../../common/types/authenticatedUser";
-import { API_URL, secureStoreKeys } from "../../common/utils/constants";
+import { secureStoreKeys } from "../../common/utils/constants";
 import { useUserStore } from "../../state/zustand/userStore";
 import { WAYFINDER_API_CLIENT, WAYFINDER_REFRESH_API_CLIENT } from "../api/axios/clients";
 import { UserRepository } from "./user.repository";
@@ -23,7 +23,7 @@ export namespace UserService {
 			return;
 		}
 
-		await WAYFINDER_API_CLIENT.post(`${API_URL}/auth/logout`, { userId: user.userId }).then(async () => {
+		await WAYFINDER_API_CLIENT.post("/auth/logout", { userId: user.userId }).then(async () => {
 			await UserRepository.clearUser();
 			useUserStore.getState().logout();
 		});

@@ -7,6 +7,7 @@ export const useStaticHomeStyles = () => {
 
 const staticHomeStyles = StyleSheet.create({
 	projectListScrollView: {
+		width: "100%",
 		backgroundColor: appColourPalette.background
 	},
 	addProjectButtonText: {
