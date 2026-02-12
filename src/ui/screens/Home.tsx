@@ -14,7 +14,7 @@ import { useStaticHomeStyles } from "../styles/screens/home/home.styles";
 
 export default function Home() {
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-    const [fetchedProjects, setFetchedProjects] = useState<ProjectInfo[]>();
+    const [fetchedProjects, setFetchedProjects] = useState<ProjectInfo[] | null>(null);
 
     const navigation = useNavigation<any>();
 
@@ -31,7 +31,7 @@ export default function Home() {
             WAYFINDER_API_CLIENT.get("/projects").then(async (res) => {
                 const projects: ProjectInfo[] = await res.data;
                 setFetchedProjects(projects);
-            });
+            }).catch(() => setFetchedProjects(null));
         }, [])
     );
 
