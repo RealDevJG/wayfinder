@@ -3,6 +3,8 @@ import { appColourPalette } from "../../appColourPalette";
 
 export interface ProjectViewStyles {
 	container: ViewStyle;
+	containerUp: ViewStyle;
+	containerDown: ViewStyle;
 	infoContainer: ViewStyle;
 	statusContainer: ViewStyle;
 	statusIcon: ViewStyle;
@@ -21,8 +23,13 @@ const staticProjectViewStyles: ProjectViewStyles = StyleSheet.create({
 		height: "auto",
 		borderBottomWidth: 1,
 		borderBottomColor: appColourPalette.separator,
-		backgroundColor: appColourPalette.secondary,
 		padding: "2%"
+	},
+	containerUp: {
+		backgroundColor: appColourPalette.secondary
+	},
+	containerDown: {
+		backgroundColor: appColourPalette.secondaryDarker
 	},
 	infoContainer: {
 		margin: 3

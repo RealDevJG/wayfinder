@@ -1,8 +1,9 @@
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { ProjectStatus } from "../../../../common/types/projectStatus";
 import { appColourPalette } from "../../../styles/appColourPalette";
 import { ProjectViewStyles } from "../../../styles/screens/home/home.projectView.styles";
+import PressableButton from "../../foundational/PressableButton";
 
 interface ProjectViewProps {
     uuid: string;
@@ -11,13 +12,15 @@ interface ProjectViewProps {
     status: ProjectStatus;
     lastActive: string;
     styles: ProjectViewStyles;
+    onPress: () => void;
+    onLongPress?: () => void;
 }
 
-const ProjectView = React.memo<ProjectViewProps>(({ uuid, title, summary, status, lastActive, styles }) => {
+const ProjectView = React.memo<ProjectViewProps>(({ uuid, title, summary, status, lastActive, styles, onPress, onLongPress }) => {
     const { statusTag, statusStyle } = getStyleAndTag(status);
 
     return (
-        <Pressable key={uuid} style={styles.container} onPress={() => alert(`You pressed ${title}`)}>
+        <PressableButton key={uuid} style={styles.container} buttonUpStyle={styles.containerUp} buttonDownStyle={styles.containerDown} onPress={onPress} onLongPress={onLongPress}>
             <Text style={[styles.titleText, styles.infoContainer]}>{title}</Text>
             <Text style={[styles.summaryText, styles.infoContainer]}>{summary}</Text>
             <View style={[styles.statusContainer, styles.infoContainer]}>
@@ -27,7 +30,7 @@ const ProjectView = React.memo<ProjectViewProps>(({ uuid, title, summary, status
                 </View>
                 <Text style={styles.statusText}>Last Active: {lastActive}</Text>
             </View>
-        </Pressable>
+        </PressableButton>
     );
 });
 

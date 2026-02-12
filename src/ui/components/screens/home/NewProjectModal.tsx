@@ -6,10 +6,12 @@ import PressableButton from "../../foundational/PressableButton";
 
 interface NewProjectModalProps {
     isVisible: boolean;
+    acceptButtonText: string;
     onClose: () => void;
+    onAcceptButton: (title: string, summary: string) => void;
 }
 
-const NewProjectModal: React.FC<NewProjectModalProps> = ({ isVisible, onClose }) => {
+const NewProjectModal: React.FC<NewProjectModalProps> = ({ isVisible, acceptButtonText, onClose, onAcceptButton }) => {
     const [title, onTitleChanged] = useState<string>("");
     const [summary, onSummaryChanged] = useState<string>("");
 
@@ -28,8 +30,8 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({ isVisible, onClose })
                 <PressableButton style={styles.buttons} buttonUpStyle={styles.buttonCancelUp} buttonDownStyle={styles.buttonCancelDown} onPress={onClose}>
                     <Text>Cancel</Text>
                 </PressableButton>
-                <PressableButton style={styles.buttons} buttonUpStyle={styles.buttonAdd}>
-                    <Text>Add</Text>
+                <PressableButton style={styles.buttons} buttonUpStyle={styles.buttonAdd} onPress={() => { onAcceptButton(title, summary); onClose() }}>
+                    <Text>{acceptButtonText}</Text>
                 </PressableButton>
             </View>
         </CustomModal>
