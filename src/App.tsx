@@ -1,25 +1,16 @@
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
-import { NavigationContainer } from "@react-navigation/native";
 import * as WebBrowser from "expo-web-browser";
-import React, { useEffect } from "react";
+import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import AppNavigator from "./AppNavigation";
-import { setupAxiosInterceptors } from "./core/api/axios/interceptors";
+import { AppInitialiser } from "./AppInitialiser";
 
 WebBrowser.maybeCompleteAuthSession();
 
 export default function App() {
-	useEffect(() => {
-		const cleanupInterceptors = setupAxiosInterceptors();
-		return () => cleanupInterceptors();
-	}, []);
-
 	return (
 		<SafeAreaProvider>
 			<ActionSheetProvider>
-				<NavigationContainer>
-					<AppNavigator />
-				</NavigationContainer>
+				<AppInitialiser />
 			</ActionSheetProvider>
 		</SafeAreaProvider>
 	);

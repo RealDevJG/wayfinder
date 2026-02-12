@@ -14,19 +14,17 @@ interface ProjectViewProps {
     lastActive: string;
     styles: ProjectViewStyles;
     onPress: () => void;
-    onEdit: (projectId: string) => void;
-    onDelete: (projectId: string) => void;
-    onLongPress?: () => void;
+    onPressIn?: () => void;
+    onEdit: () => void;
+    onDelete: () => void;
 }
 
 // TODO: was speeding coding so all this needs refactoring
-const ProjectView = React.memo<ProjectViewProps>(({ projectId, title, summary, status, lastActive, styles, onPress, onEdit, onDelete, onLongPress }) => {
+const ProjectView = React.memo<ProjectViewProps>(({ projectId, title, summary, status, lastActive, styles, onPress, onEdit, onDelete, onPressIn }) => {
     const { showActionSheetWithOptions } = useActionSheet();
     const { statusTag, statusStyle } = getStyleAndTag(status);
 
-    const handleLongPress = () => {
-        onLongPress?.();
-
+    function handleLongPress() {
         const options = ["Edit", "DELETE", "Cancel"];
         const destructiveButtonIndex = 1;
         const cancelButtonIndex = 2;
@@ -34,16 +32,24 @@ const ProjectView = React.memo<ProjectViewProps>(({ projectId, title, summary, s
         showActionSheetWithOptions({ options, cancelButtonIndex, destructiveButtonIndex },
             (selectedIndex) => {
                 if (selectedIndex === 0) {
-                    onEdit(projectId);
+                    onEdit();
                 } else if (selectedIndex === destructiveButtonIndex) {
-                    onDelete(projectId);
+                    onDelete();
                 }
             }
         )
     }
 
     return (
-        <PressableButton key={projectId} style={styles.container} buttonUpStyle={styles.containerUp} buttonDownStyle={styles.containerDown} onPress={onPress} onLongPress={handleLongPress}>
+        <PressableButton
+            key={projectId}
+            style={styles.container}
+            buttonUpStyle={styles.containerUp}
+            buttonDownStyle={styles.containerDown}
+            onPress={onPress}
+            onPressIn={() => onPressIn?.()} // fixes bug where the id isn't set in time before long press is handled
+            onLongPress={handleLongPress}
+        >
             <Text style={[styles.titleText, styles.infoContainer]}>{title}</Text>
             <Text style={[styles.summaryText, styles.infoContainer]}>{summary}</Text>
             <View style={[styles.statusContainer, styles.infoContainer]}>
@@ -72,4 +78,3 @@ function getStyleAndTag(statusTag: ProjectStatus) {
 }
 
 export default ProjectView;
-

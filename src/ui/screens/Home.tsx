@@ -55,10 +55,7 @@ export default function Home() {
             });
     }
 
-    // TODO: refactor... idk why projectId was a simple number like "3" instead of a uuid
-    function onDelete(projectId: string) {
-        alert(`attempting to delete ${lastPressedProjectId}`);
-
+    function onDelete() {
         Alert.alert("Are you sure you want to delete this item?", "It will permanently be gone", [
             {
                 text: "Cancel",
@@ -67,13 +64,12 @@ export default function Home() {
             {
                 text: "DELETE",
                 style: "destructive",
-                onPress: () => handleDeleteProject(lastPressedProjectId)
+                onPress: handleDeleteProject
             }
         ]);
     }
 
-    // TODO: refactor... idk why projectId was a simple number like "3" instead of a uuid
-    function handleDeleteProject(projectId: string) {
+    function handleDeleteProject() {
         WAYFINDER_API_CLIENT.delete(`/projects/${lastPressedProjectId}`)
             .finally(() => {
                 fetchProjectData();
@@ -98,7 +94,7 @@ export default function Home() {
                             lastActive={new Date(project.lastActive).toDateString()}
                             styles={projectViewStyles}
                             onPress={() => alert(`you pressed ${project.title}`)}
-                            onLongPress={() => { setLastPressedProjectId(project.id) }}
+                            onPressIn={() => setLastPressedProjectId(project.id)}
                             onEdit={() => setIsUpdateModalVisible(true)}
                             onDelete={onDelete}
                         />

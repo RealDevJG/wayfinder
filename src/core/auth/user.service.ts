@@ -44,4 +44,12 @@ export namespace UserService {
 			await UserRepository.updateJwtTokens(accessToken, refreshToken);
 		});
 	}
+
+	// TODO: this func needs a better name. It just re-logs people in after the app restarts using info already on-device
+	export async function attemptLogin() {
+		const userProfile = await UserRepository.getUser();
+		const accessToken = await UserRepository.getJwtToken(secureStoreKeys.accessToken);
+
+		useUserStore.getState().login(userProfile, { accessToken });
+	}
 }
