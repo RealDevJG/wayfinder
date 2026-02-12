@@ -1,6 +1,6 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProjectInfo } from "../../common/types/projectInfo";
 import { ProjectStatus } from "../../common/types/projectStatus";
@@ -13,6 +13,7 @@ import { useStaticGlobalStyles } from "../styles/global.styles";
 import { useHomeProjectViewStyles } from "../styles/screens/home/home.projectView.styles";
 import { useStaticHomeStyles } from "../styles/screens/home/home.styles";
 
+// TODO: was speeding coding so all this needs refactoring
 export default function Home() {
     const [isAddModalVisible, setIsAddModalVisible] = useState<boolean>(false);
     const [isUpdateModalVisible, setIsUpdateModalVisible] = useState<boolean>(false);
@@ -36,7 +37,7 @@ export default function Home() {
         }).catch(() => setFetchedProjects(null));
     }
 
-    function onAddProject(title: string, summary: string) {
+    function handleAddProject(title: string, summary: string) {
         const status = ProjectStatus.Idea;
 
         WAYFINDER_API_CLIENT.post("/projects", { title, summary, status })
@@ -45,7 +46,7 @@ export default function Home() {
             });
     }
 
-    function onUpdateProject(title: string, summary: string) {
+    function handleUpdateProject(title: string, summary: string) {
         const status = ProjectStatus.OnHold;
 
         WAYFINDER_API_CLIENT.patch(`/projects/${lastPressedProjectId}`, { title, summary, status })
@@ -54,9 +55,29 @@ export default function Home() {
             });
     }
 
-    function onLongPressProject(projectId: string) {
-        setLastPressedProjectId(projectId);
-        setIsUpdateModalVisible(true);
+    // TODO: refactor... idk why projectId was a simple number like "3" instead of a uuid
+    function onDelete(projectId: string) {
+        alert(`attempting to delete ${lastPressedProjectId}`);
+
+        Alert.alert("Are you sure you want to delete this item?", "It will permanently be gone", [
+            {
+                text: "Cancel",
+                style: "cancel",
+            },
+            {
+                text: "DELETE",
+                style: "destructive",
+                onPress: () => handleDeleteProject(lastPressedProjectId)
+            }
+        ]);
+    }
+
+    // TODO: refactor... idk why projectId was a simple number like "3" instead of a uuid
+    function handleDeleteProject(projectId: string) {
+        WAYFINDER_API_CLIENT.delete(`/projects/${lastPressedProjectId}`)
+            .finally(() => {
+                fetchProjectData();
+            });
     }
 
     useFocusEffect(useCallback(fetchProjectData, []));
@@ -70,14 +91,16 @@ export default function Home() {
                     {fetchedProjects && fetchedProjects.map((project, index) => (
                         <ProjectView
                             key={index}
-                            uuid={index.toString()}
+                            projectId={index.toString()}
                             title={project.title}
                             summary={project.summary}
                             status={project.status}
                             lastActive={new Date(project.lastActive).toDateString()}
                             styles={projectViewStyles}
                             onPress={() => alert(`you pressed ${project.title}`)}
-                            onLongPress={() => onLongPressProject(project.id)}
+                            onLongPress={() => { setLastPressedProjectId(project.id) }}
+                            onEdit={() => setIsUpdateModalVisible(true)}
+                            onDelete={onDelete}
                         />
                     ))}
                 </ScrollView>
@@ -85,8 +108,8 @@ export default function Home() {
             <BannerButton onPress={() => setIsAddModalVisible(true)}>
                 <Text style={globalStyles.bannerButtonText}>Add Project</Text>
             </BannerButton>
-            <NewProjectModal isVisible={isAddModalVisible} acceptButtonText="Add" onClose={() => setIsAddModalVisible(false)} onAcceptButton={onAddProject} />
-            <NewProjectModal isVisible={isUpdateModalVisible} acceptButtonText="Update" onClose={() => setIsUpdateModalVisible(false)} onAcceptButton={onUpdateProject} />
+            <NewProjectModal isVisible={isAddModalVisible} acceptButtonText="Add" onClose={() => setIsAddModalVisible(false)} onAcceptButton={handleAddProject} />
+            <NewProjectModal isVisible={isUpdateModalVisible} acceptButtonText="Update" onClose={() => setIsUpdateModalVisible(false)} onAcceptButton={handleUpdateProject} />
         </SafeAreaView>
     );
 }

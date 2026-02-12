@@ -1,3 +1,4 @@
+import { useActionSheet } from "@expo/react-native-action-sheet";
 import React from "react";
 import { Text, View } from "react-native";
 import { ProjectStatus } from "../../../../common/types/projectStatus";
@@ -6,21 +7,43 @@ import { ProjectViewStyles } from "../../../styles/screens/home/home.projectView
 import PressableButton from "../../foundational/PressableButton";
 
 interface ProjectViewProps {
-    uuid: string;
+    projectId: string;
     title: string;
     summary?: string;
     status: ProjectStatus;
     lastActive: string;
     styles: ProjectViewStyles;
     onPress: () => void;
+    onEdit: (projectId: string) => void;
+    onDelete: (projectId: string) => void;
     onLongPress?: () => void;
 }
 
-const ProjectView = React.memo<ProjectViewProps>(({ uuid, title, summary, status, lastActive, styles, onPress, onLongPress }) => {
+// TODO: was speeding coding so all this needs refactoring
+const ProjectView = React.memo<ProjectViewProps>(({ projectId, title, summary, status, lastActive, styles, onPress, onEdit, onDelete, onLongPress }) => {
+    const { showActionSheetWithOptions } = useActionSheet();
     const { statusTag, statusStyle } = getStyleAndTag(status);
 
+    const handleLongPress = () => {
+        onLongPress?.();
+
+        const options = ["Edit", "DELETE", "Cancel"];
+        const destructiveButtonIndex = 1;
+        const cancelButtonIndex = 2;
+
+        showActionSheetWithOptions({ options, cancelButtonIndex, destructiveButtonIndex },
+            (selectedIndex) => {
+                if (selectedIndex === 0) {
+                    onEdit(projectId);
+                } else if (selectedIndex === destructiveButtonIndex) {
+                    onDelete(projectId);
+                }
+            }
+        )
+    }
+
     return (
-        <PressableButton key={uuid} style={styles.container} buttonUpStyle={styles.containerUp} buttonDownStyle={styles.containerDown} onPress={onPress} onLongPress={onLongPress}>
+        <PressableButton key={projectId} style={styles.container} buttonUpStyle={styles.containerUp} buttonDownStyle={styles.containerDown} onPress={onPress} onLongPress={handleLongPress}>
             <Text style={[styles.titleText, styles.infoContainer]}>{title}</Text>
             <Text style={[styles.summaryText, styles.infoContainer]}>{summary}</Text>
             <View style={[styles.statusContainer, styles.infoContainer]}>
@@ -49,3 +72,4 @@ function getStyleAndTag(statusTag: ProjectStatus) {
 }
 
 export default ProjectView;
+

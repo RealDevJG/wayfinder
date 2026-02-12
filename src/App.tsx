@@ -1,3 +1,4 @@
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { NavigationContainer } from "@react-navigation/native";
 import * as WebBrowser from "expo-web-browser";
 import React, { useEffect } from "react";
@@ -15,9 +16,11 @@ export default function App() {
 
 	return (
 		<SafeAreaProvider>
-			<NavigationContainer>
-				<AppNavigator />
-			</NavigationContainer>
+			<ActionSheetProvider>
+				<NavigationContainer>
+					<AppNavigator />
+				</NavigationContainer>
+			</ActionSheetProvider>
 		</SafeAreaProvider>
 	);
 }
