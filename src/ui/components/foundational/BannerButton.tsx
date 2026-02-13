@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Pressable, StyleProp, ViewStyle } from "react-native";
+import { Pressable, ViewStyle } from "react-native";
 import { useStaticGlobalStyles } from "../../styles/global.styles";
 
 interface BannerButtonProps {
@@ -9,10 +9,10 @@ interface BannerButtonProps {
 	onPressIn?: () => void;
 	longPressDelay?: number;
 	disabled?: boolean;
-	style?: StyleProp<ViewStyle>;
-	disabledStyle?: StyleProp<ViewStyle>;
-	buttonDownStyle?: StyleProp<ViewStyle>;
-	buttonUpStyle?: StyleProp<ViewStyle>;
+	style?: ViewStyle;
+	disabledStyle?: ViewStyle;
+	buttonDownStyle?: ViewStyle;
+	buttonUpStyle?: ViewStyle;
 }
 
 const BannerButton: React.FC<BannerButtonProps> = (

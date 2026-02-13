@@ -18,7 +18,7 @@ export default function Home() {
     const [isAddModalVisible, setIsAddModalVisible] = useState<boolean>(false);
     const [isUpdateModalVisible, setIsUpdateModalVisible] = useState<boolean>(false);
     const [fetchedProjects, setFetchedProjects] = useState<ProjectInfo[] | null>(null);
-    const [lastPressedProjectId, setLastPressedProjectId] = useState<string>("");
+    const [lastPressedProject, setLastPressedProject] = useState<ProjectInfo | null>(null);
 
     const navigation = useNavigation<any>();
 
@@ -37,19 +37,15 @@ export default function Home() {
         }).catch(() => setFetchedProjects(null));
     }
 
-    function handleAddProject(title: string, summary: string) {
-        const status = ProjectStatus.Idea;
-
+    function handleAddProject(title: string, summary: string, status: ProjectStatus) {
         WAYFINDER_API_CLIENT.post("/projects", { title, summary, status })
             .finally(() => {
                 fetchProjectData();
             });
     }
 
-    function handleUpdateProject(title: string, summary: string) {
-        const status = ProjectStatus.OnHold;
-
-        WAYFINDER_API_CLIENT.patch(`/projects/${lastPressedProjectId}`, { title, summary, status })
+    function handleUpdateProject(title: string, summary: string, status: ProjectStatus) {
+        WAYFINDER_API_CLIENT.patch(`/projects/${lastPressedProject!.id}`, { title, summary, status })
             .finally(() => {
                 fetchProjectData();
             });
@@ -70,7 +66,7 @@ export default function Home() {
     }
 
     function handleDeleteProject() {
-        WAYFINDER_API_CLIENT.delete(`/projects/${lastPressedProjectId}`)
+        WAYFINDER_API_CLIENT.delete(`/projects/${lastPressedProject!.id}`)
             .finally(() => {
                 fetchProjectData();
             });
@@ -84,7 +80,7 @@ export default function Home() {
             {/* The below View allows for the inner ScrollView to use flex properly */}
             <View style={globalStyles.contentContainer}>
                 <ScrollView style={staticStyles.projectListScrollView}>
-                    {fetchedProjects && fetchedProjects.map((project, index) => (
+                    {fetchedProjects && fetchedProjects.toReversed().map((project, index) => (
                         <ProjectView
                             key={index}
                             projectId={index.toString()}
@@ -94,7 +90,7 @@ export default function Home() {
                             lastActive={new Date(project.lastActive).toDateString()}
                             styles={projectViewStyles}
                             onPress={() => alert(`you pressed ${project.title}`)}
-                            onPressIn={() => setLastPressedProjectId(project.id)}
+                            onPressIn={() => setLastPressedProject(project)}
                             onEdit={() => setIsUpdateModalVisible(true)}
                             onDelete={onDelete}
                         />
@@ -104,8 +100,8 @@ export default function Home() {
             <BannerButton onPress={() => setIsAddModalVisible(true)}>
                 <Text style={globalStyles.bannerButtonText}>Add Project</Text>
             </BannerButton>
-            <NewProjectModal isVisible={isAddModalVisible} acceptButtonText="Add" onClose={() => setIsAddModalVisible(false)} onAcceptButton={handleAddProject} />
-            <NewProjectModal isVisible={isUpdateModalVisible} acceptButtonText="Update" onClose={() => setIsUpdateModalVisible(false)} onAcceptButton={handleUpdateProject} />
+            <NewProjectModal isVisible={isAddModalVisible} type="add" onClose={() => setIsAddModalVisible(false)} onAcceptButton={handleAddProject} lastPressedProject={lastPressedProject} />
+            <NewProjectModal isVisible={isUpdateModalVisible} type="update" onClose={() => setIsUpdateModalVisible(false)} onAcceptButton={handleUpdateProject} lastPressedProject={lastPressedProject} />
         </SafeAreaView>
     );
 }

@@ -1,36 +1,69 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
+import { ProjectInfo } from "../../../../common/types/projectInfo";
+import { ProjectStatus } from "../../../../common/types/projectStatus";
 import { appColourPalette } from "../../../styles/appColourPalette";
 import CustomModal from "../../foundational/CustomModal";
 import PressableButton from "../../foundational/PressableButton";
+import { Radio } from "../../foundational/RadioButtons/Radio";
+import { RadioGroup } from "../../foundational/RadioButtons/RadioGroup";
 
 interface NewProjectModalProps {
+    type: "add" | "update";
     isVisible: boolean;
-    acceptButtonText: string;
+    lastPressedProject: ProjectInfo | null;
     onClose: () => void;
-    onAcceptButton: (title: string, summary: string) => void;
+    onAcceptButton: (title: string, summary: string, status: ProjectStatus) => void;
 }
 
-const NewProjectModal: React.FC<NewProjectModalProps> = ({ isVisible, acceptButtonText, onClose, onAcceptButton }) => {
-    const [title, onTitleChanged] = useState<string>("");
-    const [summary, onSummaryChanged] = useState<string>("");
+const NewProjectModal: React.FC<NewProjectModalProps> = ({ type, isVisible, lastPressedProject, onClose, onAcceptButton }) => {
+    const [title, setTitle] = useState<string>("");
+    const [summary, setSummary] = useState<string>("");
+    const [status, setStatus] = useState<ProjectStatus>(ProjectStatus.Idea);
+
+    const acceptButtonText = type[0].toLocaleUpperCase() + type.slice(1);
+
+    useEffect(() => {
+        if (type === "update" && lastPressedProject) {
+            setTitle(lastPressedProject.title);
+            setSummary(lastPressedProject.summary);
+            setStatus(lastPressedProject.status);
+        }
+    }, [lastPressedProject]);
+
+    function handleClose() {
+        onClose();
+        setStatus(ProjectStatus.Idea);
+    }
+
+    function handleAccept() {
+        onAcceptButton(title, summary, status);
+        onClose();
+
+        setStatus(ProjectStatus.Idea);
+    }
 
     return (
-        <CustomModal containerColour={appColourPalette.secondary} isVisible={isVisible} onClose={onClose}>
+        <CustomModal containerColour={appColourPalette.secondary} isVisible={isVisible} onClose={handleClose}>
             <Text style={styles.modalTitle}>Add Project</Text>
             <View style={styles.textInputContainer}>
                 <Text style={styles.textInputTitle}>Title</Text>
-                <TextInput style={styles.textInput} onChangeText={text => onTitleChanged(text)} value={title} autoCapitalize="words" editable />
+                <TextInput style={styles.textInput} onChangeText={text => setTitle(text)} value={title} autoCapitalize="words" editable />
             </View>
             <View style={styles.textInputContainer}>
                 <Text style={styles.textInputTitle}>Summary</Text>
-                <TextInput style={[styles.textInput, styles.summaryTextInput]} onChangeText={text => onSummaryChanged(text)} value={summary} multiline numberOfLines={10} editable />
+                <TextInput style={[styles.textInput, styles.summaryTextInput]} onChangeText={text => setSummary(text)} value={summary} multiline numberOfLines={10} editable />
             </View>
+            <RadioGroup onChildPressed={(value) => setStatus(value)}>
+                {Object.values(ProjectStatus).map((value, index) => (
+                    <Radio key={index} label={value} selected={status === value} />
+                ))}
+            </RadioGroup>
             <View style={styles.buttonsContainer}>
-                <PressableButton style={styles.buttons} buttonUpStyle={styles.buttonCancelUp} buttonDownStyle={styles.buttonCancelDown} onPress={onClose}>
+                <PressableButton style={styles.buttons} buttonUpStyle={styles.buttonCancelUp} buttonDownStyle={styles.buttonCancelDown} onPress={handleClose}>
                     <Text>Cancel</Text>
                 </PressableButton>
-                <PressableButton style={styles.buttons} buttonUpStyle={styles.buttonAdd} onPress={() => { onAcceptButton(title, summary); onClose() }}>
+                <PressableButton style={styles.buttons} buttonUpStyle={styles.buttonAdd} onPress={handleAccept}>
                     <Text>{acceptButtonText}</Text>
                 </PressableButton>
             </View>
