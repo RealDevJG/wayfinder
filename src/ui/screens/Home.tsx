@@ -31,6 +31,10 @@ export default function Home() {
         navigation.navigate("OAuthLogin");
     }
 
+    function gotoProjectScreen(projectInfo: ProjectInfo) {
+        navigation.navigate("Projects", { projectInfo });
+    }
+
     // TODO: when adding offline-usage through local db and request queue, refactor this
     function fetchProjectData() {
         const user = useUserStore.getState().user;
@@ -119,7 +123,7 @@ export default function Home() {
                             status={project.status}
                             lastActive={new Date(project.lastActive).toDateString()}
                             styles={projectViewStyles}
-                            onPress={() => alert(`you pressed ${project.title}`)}
+                            onPress={() => gotoProjectScreen(project)}
                             onPressIn={() => setLastPressedProject(project)}
                             onEdit={() => setIsUpdateModalVisible(true)}
                             onDelete={onDelete}
