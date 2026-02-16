@@ -19,13 +19,7 @@ interface RadioGroupProps {
     stylingForChildren?: StyleProp<ViewStyle>;
 }
 
-export const RadioGroup: React.FC<RadioGroupProps> = ({
-    children,
-    onChildPressed,
-    styleOverride,
-    selectedStyleOverride,
-    stylingForChildren
-}) => {
+export const RadioGroup: React.FC<RadioGroupProps> = ({ children, onChildPressed, styleOverride, selectedStyleOverride, stylingForChildren }) => {
     const [selectedValue, setSelectedValue] = useState<any>();
 
     return (

@@ -23,7 +23,7 @@ export namespace UserService {
 			return;
 		}
 
-		await WAYFINDER_API_CLIENT.post("/auth/logout").then(async () => {
+		await WAYFINDER_API_CLIENT.post("/auth/logout").finally(async () => {
 			await UserRepository.clearUser();
 			useUserStore.getState().logout();
 		});

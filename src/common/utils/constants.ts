@@ -14,7 +14,10 @@ export const asyncStorageKeys = {
 	username: "username"
 } as const;
 
-export const API_URL = "https://devjg.duckdns.org/api";
+// TODO: change url depending on production vs development builds in eas env vars
+export const API_URL = "https://wayfinder.devjg.duckdns.org/api";
+// export const API_URL = "https://dev1.devjg.duckdns.org/api";
+
 export const AXIOS_CONFIG = {
 	baseURL: API_URL,
 	timeout: 5000

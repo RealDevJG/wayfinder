@@ -12,6 +12,7 @@ import ProjectView from "../components/screens/home/ProjectView";
 import { useStaticGlobalStyles } from "../styles/global.styles";
 import { useHomeProjectViewStyles } from "../styles/screens/home/home.projectView.styles";
 import { useStaticHomeStyles } from "../styles/screens/home/home.styles";
+import { useUserStore } from "../../state/zustand/userStore";
 
 // TODO: was speeding coding so all this needs refactoring
 export default function Home() {
@@ -30,21 +31,43 @@ export default function Home() {
         navigation.navigate("OAuthLogin");
     }
 
+    // TODO: when adding offline-usage through local db and request queue, refactor this
     function fetchProjectData() {
+        const user = useUserStore.getState().user;
+
+        if (!user) {
+            setFetchedProjects(null);
+            return;
+        }
+
         WAYFINDER_API_CLIENT.get("/projects").then(async (res) => {
             const projects: ProjectInfo[] = await res.data;
             setFetchedProjects(projects);
         }).catch(() => setFetchedProjects(null));
     }
 
+    // TODO: when adding offline-usage through local db and request queue, refactor this
     function handleAddProject(title: string, summary: string, status: ProjectStatus) {
+        const user = useUserStore.getState().user;
+
+        if (!user) {
+            return;
+        }
+
         WAYFINDER_API_CLIENT.post("/projects", { title, summary, status })
             .finally(() => {
                 fetchProjectData();
             });
     }
 
+    // TODO: when adding offline-usage through local db and request queue, refactor this
     function handleUpdateProject(title: string, summary: string, status: ProjectStatus) {
+        const user = useUserStore.getState().user;
+
+        if (!user) {
+            return;
+        }
+
         WAYFINDER_API_CLIENT.patch(`/projects/${lastPressedProject!.id}`, { title, summary, status })
             .finally(() => {
                 fetchProjectData();
@@ -65,7 +88,14 @@ export default function Home() {
         ]);
     }
 
+    // TODO: when adding offline-usage through local db and request queue, refactor this
     function handleDeleteProject() {
+        const user = useUserStore.getState().user;
+
+        if (!user) {
+            return;
+        }
+
         WAYFINDER_API_CLIENT.delete(`/projects/${lastPressedProject!.id}`)
             .finally(() => {
                 fetchProjectData();
@@ -80,7 +110,7 @@ export default function Home() {
             {/* The below View allows for the inner ScrollView to use flex properly */}
             <View style={globalStyles.contentContainer}>
                 <ScrollView style={staticStyles.projectListScrollView}>
-                    {fetchedProjects && fetchedProjects.toReversed().map((project, index) => (
+                    {fetchedProjects?.toReversed().map((project, index) => (
                         <ProjectView
                             key={index}
                             projectId={index.toString()}
