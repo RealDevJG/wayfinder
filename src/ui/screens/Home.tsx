@@ -6,7 +6,7 @@ import { ProjectInfo } from "../../common/types/projectInfo";
 import { ProjectStatus } from "../../common/types/projectStatus";
 import { WAYFINDER_API_CLIENT } from "../../core/api/axios/clients";
 import BannerButton from "../components/foundational/BannerButton";
-import CustomHeader from "../components/foundational/CustomHeader";
+import CustomHeader from "../components/foundational/Headers/CustomHeader";
 import NewProjectModal from "../components/screens/home/NewProjectModal";
 import ProjectView from "../components/screens/home/ProjectView";
 import { useStaticGlobalStyles } from "../styles/global.styles";

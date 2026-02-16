@@ -2,12 +2,12 @@ import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { appColourPalette } from "../../styles/appColourPalette";
-import PressableButton from "./PressableButton";
+import { appColourPalette } from "../../../styles/appColourPalette";
+import PressableButton from "../PressableButton";
 
 // TODO: make profileIcon passable so other icons can be in the top right as well
-const backIcon = require("../../../../resources/assets/images/global/back-icon.png");
-const profileIcon = require("../../../../resources/assets/images/global/profile-icon.png");
+const backIcon = require("../../../../../resources/assets/images/global/back-icon.png");
+const profileIcon = require("../../../../../resources/assets/images/global/profile-icon.png");
 
 interface CustomHeaderProps {
     title: string,
@@ -25,32 +25,33 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, showBackButton = tru
     }
 
     return (
-        <View style={styles.headerContainer}>
-            <View style={styles.headerBody}>
+        <View style={headerStyles.headerContainer}>
+            <View style={headerStyles.headerBody}>
                 <StatusBar style="auto" backgroundColor={appColourPalette.statusBar} />
                 {showBackButton ?
-                    <PressableButton style={styles.headerButton} buttonDownStyle={styles.headerButtonDown} buttonUpStyle={styles.headerButtonUp} onPress={onBackButton}>
-                        <Image style={styles.headerButtonIcon} source={backIcon} />
+                    <PressableButton style={headerStyles.headerButton} buttonDownStyle={headerStyles.headerButtonDown} buttonUpStyle={headerStyles.headerButtonUp} onPress={onBackButton}>
+                        <Image style={headerStyles.headerButtonIcon} source={backIcon} />
                     </PressableButton>
-                    : <PressableButton style={[styles.headerButton, styles.headerButtonUp]} buttonUpStyle={styles.headerButtonUp} />
+                    : <PressableButton style={[headerStyles.headerButton, headerStyles.headerButtonUp]} buttonUpStyle={headerStyles.headerButtonUp} />
                 }
                 <View>
-                    <Text style={styles.headerTitleText}>{title}</Text>
+                    <Text style={headerStyles.headerTitleText}>{title}</Text>
                 </View>
                 {onRightButton ?
-                    <PressableButton style={styles.headerButton} buttonDownStyle={styles.headerButtonDown} buttonUpStyle={styles.headerButtonUp} onPress={onRightButton}>
-                        <Image style={styles.headerButtonIcon} source={profileIcon} />
+                    <PressableButton style={headerStyles.headerButton} buttonDownStyle={headerStyles.headerButtonDown} buttonUpStyle={headerStyles.headerButtonUp} onPress={onRightButton}>
+                        <Image style={headerStyles.headerButtonIcon} source={profileIcon} />
                     </PressableButton>
-                    : <PressableButton style={[styles.headerButton, styles.headerButtonUp]} buttonUpStyle={styles.headerButtonUp} />
+                    : <PressableButton style={[headerStyles.headerButton, headerStyles.headerButtonUp]} buttonUpStyle={headerStyles.headerButtonUp} />
                 }
             </View>
         </View>
     );
 }
 
+// TODO: put styles in its own file for consistency across the app
 const headerButtonSize = 34;
 
-const styles = StyleSheet.create({
+export const headerStyles = StyleSheet.create({
     headerContainer: {
         flex: 1
     },

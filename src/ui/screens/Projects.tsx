@@ -2,9 +2,9 @@ import { useRoute } from "@react-navigation/native";
 import React from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CustomHeader from "../components/foundational/CustomHeader";
-import { useStaticGlobalStyles } from "../styles/global.styles";
 import { ProjectInfo } from "../../common/types/projectInfo";
+import { EditableProjectHeader } from "../components/foundational/Headers/EditableProjectHeader";
+import { useStaticGlobalStyles } from "../styles/global.styles";
 
 export default function Projects() {
     const route = useRoute();
@@ -14,7 +14,7 @@ export default function Projects() {
 
     return (
         <SafeAreaView style={globalStyles.appContainer}>
-            <CustomHeader title={projectInfo.title} />
+            <EditableProjectHeader projectInfo={projectInfo} />
             <View style={globalStyles.contentContainer}>
                 <Text>Test</Text>
                 <Text>{projectInfo.title}</Text>

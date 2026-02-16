@@ -5,8 +5,7 @@ import { ProjectStatus } from "../../../../common/types/projectStatus";
 import { appColourPalette } from "../../../styles/appColourPalette";
 import CustomModal from "../../foundational/CustomModal";
 import PressableButton from "../../foundational/PressableButton";
-import { Radio } from "../../foundational/RadioButtons/Radio";
-import { RadioGroup } from "../../foundational/RadioButtons/RadioGroup";
+import ProjectStatusSelector from "../shared/ProjectStatusSelector";
 
 interface NewProjectModalProps {
     type: "add" | "update";
@@ -54,11 +53,7 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({ type, isVisible, last
                 <Text style={styles.textInputTitle}>Summary</Text>
                 <TextInput style={[styles.textInput, styles.summaryTextInput]} onChangeText={text => setSummary(text)} value={summary} multiline numberOfLines={10} editable />
             </View>
-            <RadioGroup onChildPressed={(value) => setStatus(value)}>
-                {Object.values(ProjectStatus).map((value, index) => (
-                    <Radio key={index} label={value} selected={status === value} />
-                ))}
-            </RadioGroup>
+            <ProjectStatusSelector currentStatus={status} setStatusState={setStatus} />
             <View style={styles.buttonsContainer}>
                 <PressableButton style={styles.buttons} buttonUpStyle={styles.buttonCancelUp} buttonDownStyle={styles.buttonCancelDown} onPress={handleClose}>
                     <Text>Cancel</Text>

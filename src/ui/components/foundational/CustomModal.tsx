@@ -20,6 +20,7 @@ const CustomModal: React.FC<CustomModalProps> = ({ children, isVisible, onClose,
     );
 }
 
+// TODO: put styles in its own file for consistency across the app
 const styles = StyleSheet.create({
     overlay: {
         width: "100%",

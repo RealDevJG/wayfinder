@@ -7,7 +7,7 @@ import { LowercaseOAuthProvider } from "../../common/types/oAuthProvider";
 import { API_URL } from "../../common/utils/constants";
 import { UserService } from "../../core/auth/user.service";
 import { useUserStore } from "../../state/zustand/userStore";
-import CustomHeader from "../components/foundational/CustomHeader";
+import CustomHeader from "../components/foundational/Headers/CustomHeader";
 import PressableButton from "../components/foundational/PressableButton";
 import OAuthLoginView from "../components/screens/oauthlogin/OAuthLoginView";
 import { useStaticGlobalStyles } from "../styles/global.styles";

@@ -8,7 +8,7 @@ interface RadioProps {
     selected?: boolean;
 }
 
-export const Radio: React.FC<RadioProps> = ({ label, value, selected }) => {
+const Radio: React.FC<RadioProps> = ({ label, value, selected }) => {
     const { selectedValue, setSelectedValue, onChildPressed, selectedStyleOverride, stylingForChildren } = useRadioGroup();
 
     value ??= label;
@@ -46,6 +46,7 @@ export const Radio: React.FC<RadioProps> = ({ label, value, selected }) => {
     );
 };
 
+// TODO: put styles in its own file for consistency across the app
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
@@ -74,3 +75,5 @@ const styles = StyleSheet.create({
         fontSize: 16
     }
 });
+
+export default Radio;
