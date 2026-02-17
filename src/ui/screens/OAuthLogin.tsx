@@ -7,8 +7,8 @@ import { LowercaseOAuthProvider } from "../../common/types/oAuthProvider";
 import { API_URL } from "../../common/utils/constants";
 import { UserService } from "../../core/auth/user.service";
 import { useUserStore } from "../../state/zustand/userStore";
+import CustomPressable from "../components/foundational/CustomPressable";
 import CustomHeader from "../components/foundational/Headers/CustomHeader";
-import PressableButton from "../components/foundational/PressableButton";
 import OAuthLoginView from "../components/screens/oauthlogin/OAuthLoginView";
 import { useStaticGlobalStyles } from "../styles/global.styles";
 
@@ -43,9 +43,9 @@ export default function OAuthLogin() {
                 {user ? (
                     <>
                         <Text>You are logged in as {user?.username}</Text>
-                        <PressableButton onPress={UserService.logout}>
+                        <CustomPressable onPress={UserService.logout}>
                             <Text style={globalStyles.bannerButtonText}>LOG OUT</Text>
-                        </PressableButton>
+                        </CustomPressable>
                     </>
                 ) :
                     <OAuthLoginView providerImage={googleImage} providerTitle="Google" onPress={() => OAuthLogin("google")} />

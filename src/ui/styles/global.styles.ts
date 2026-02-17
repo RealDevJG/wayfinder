@@ -29,20 +29,20 @@ const staticGlobalStyles = StyleSheet.create({
 	},
 	appContainer: {
 		flex: 1,
-		backgroundColor: appColourPalette.background,
+		backgroundColor: appColourPalette.statusBar,
 		alignItems: "center",
 		justifyContent: "center",
 		marginTop: 0
 	},
 	contentContainer: {
 		flex: 11,
+		backgroundColor: appColourPalette.background,
 		width: "100%",
 		height: "100%",
 		justifyContent: "center",
 		alignItems: "center"
 	},
 	bannerButtonView: {
-		width: "100%",
 		alignItems: "center",
 		padding: 4,
 		borderTopWidth: 1,

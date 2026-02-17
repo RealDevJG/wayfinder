@@ -15,16 +15,15 @@ interface BannerButtonProps {
 	buttonUpStyle?: ViewStyle;
 }
 
-const BannerButton: React.FC<BannerButtonProps> = (
-	{ children, onPress, onLongPress, onPressIn, longPressDelay, disabled, style, disabledStyle: disabledStyleOverride, buttonDownStyle: buttonDownStyleOverride, buttonUpStyle: buttonUpStyleOverride }
-) => {
+const BannerButton: React.FC<BannerButtonProps> = ({ children, onPress, onLongPress, onPressIn, longPressDelay, disabled, style, disabledStyle, buttonDownStyle, buttonUpStyle }) => {
 	const globalStyles = useStaticGlobalStyles();
 
 	return (
 		<Pressable onPress={onPress} onLongPress={onLongPress} onPressIn={onPressIn} delayLongPress={longPressDelay} disabled={disabled} style={({ pressed }) => [
+			{ width: "100%" },
 			style ?? globalStyles.bannerButtonView,
-			disabled ? (disabledStyleOverride ?? globalStyles.disabledButton)
-				: pressed ? (buttonDownStyleOverride ?? globalStyles.bannerButtonDown) : (buttonUpStyleOverride ?? globalStyles.bannerButtonUp)
+			disabled ? (disabledStyle ?? globalStyles.disabledButton)
+				: pressed ? (buttonDownStyle ?? globalStyles.bannerButtonDown) : (buttonUpStyle ?? globalStyles.bannerButtonUp)
 		]}>
 			{children}
 		</Pressable>

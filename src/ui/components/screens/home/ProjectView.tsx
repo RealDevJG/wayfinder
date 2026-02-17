@@ -4,7 +4,7 @@ import { Text, View } from "react-native";
 import { ProjectStatus } from "../../../../common/types/projectStatus";
 import { appColourPalette } from "../../../styles/appColourPalette";
 import { ProjectViewStyles } from "../../../styles/screens/home/home.projectView.styles";
-import PressableButton from "../../foundational/PressableButton";
+import CustomPressable from "../../foundational/CustomPressable";
 
 interface ProjectViewProps {
     projectId: string;
@@ -41,7 +41,7 @@ const ProjectView = React.memo<ProjectViewProps>(({ projectId, title, summary, s
     }
 
     return (
-        <PressableButton
+        <CustomPressable
             key={projectId}
             style={styles.container}
             buttonUpStyle={styles.containerUp}
@@ -59,7 +59,7 @@ const ProjectView = React.memo<ProjectViewProps>(({ projectId, title, summary, s
                 </View>
                 <Text style={styles.statusText}>Last Active: {lastActive}</Text>
             </View>
-        </PressableButton>
+        </CustomPressable>
     );
 });
 

@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ProjectInfo } from "../../common/types/projectInfo";
 import { ProjectStatus } from "../../common/types/projectStatus";
 import { WAYFINDER_API_CLIENT } from "../../core/api/axios/clients";
+import { useUserStore } from "../../state/zustand/userStore";
 import BannerButton from "../components/foundational/BannerButton";
 import CustomHeader from "../components/foundational/Headers/CustomHeader";
 import NewProjectModal from "../components/screens/home/NewProjectModal";
@@ -12,7 +13,6 @@ import ProjectView from "../components/screens/home/ProjectView";
 import { useStaticGlobalStyles } from "../styles/global.styles";
 import { useHomeProjectViewStyles } from "../styles/screens/home/home.projectView.styles";
 import { useStaticHomeStyles } from "../styles/screens/home/home.styles";
-import { useUserStore } from "../../state/zustand/userStore";
 
 // TODO: was speeding coding so all this needs refactoring
 export default function Home() {

@@ -23,7 +23,7 @@ export const EditableHeader: React.FC<EditableHeaderProps> = ({ initialTitle, he
     }
 
     return (
-        <View style={headerViewStyles}>
+        <View style={[headerViewStyles, { zIndex: 999 }]}>
             {isEditing
                 ? renderEditMode(title, setTitle, handleExitEditMode)
                 : renderReadonlyMode(title, handleEnterEditMode)

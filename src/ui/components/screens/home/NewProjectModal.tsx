@@ -4,7 +4,7 @@ import { ProjectInfo } from "../../../../common/types/projectInfo";
 import { ProjectStatus } from "../../../../common/types/projectStatus";
 import { appColourPalette } from "../../../styles/appColourPalette";
 import CustomModal from "../../foundational/CustomModal";
-import PressableButton from "../../foundational/PressableButton";
+import CustomPressable from "../../foundational/CustomPressable";
 import ProjectStatusSelector from "../shared/ProjectStatusSelector";
 
 interface NewProjectModalProps {
@@ -55,12 +55,12 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({ type, isVisible, last
             </View>
             <ProjectStatusSelector currentStatus={status} setStatusState={setStatus} />
             <View style={styles.buttonsContainer}>
-                <PressableButton style={styles.buttons} buttonUpStyle={styles.buttonCancelUp} buttonDownStyle={styles.buttonCancelDown} onPress={handleClose}>
+                <CustomPressable style={styles.buttons} buttonUpStyle={styles.buttonCancelUp} buttonDownStyle={styles.buttonCancelDown} onPress={handleClose}>
                     <Text>Cancel</Text>
-                </PressableButton>
-                <PressableButton style={styles.buttons} buttonUpStyle={styles.buttonAdd} onPress={handleAccept}>
+                </CustomPressable>
+                <CustomPressable style={styles.buttons} buttonUpStyle={styles.buttonAdd} onPress={handleAccept}>
                     <Text>{acceptButtonText}</Text>
-                </PressableButton>
+                </CustomPressable>
             </View>
         </CustomModal>
     );

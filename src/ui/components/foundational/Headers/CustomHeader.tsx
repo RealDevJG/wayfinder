@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { appColourPalette } from "../../../styles/appColourPalette";
-import PressableButton from "../PressableButton";
+import CustomPressable from "../CustomPressable";
 
 // TODO: make profileIcon passable so other icons can be in the top right as well
 const backIcon = require("../../../../../resources/assets/images/global/back-icon.png");
@@ -29,19 +29,19 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, showBackButton = tru
             <View style={headerStyles.headerBody}>
                 <StatusBar style="auto" backgroundColor={appColourPalette.statusBar} />
                 {showBackButton ?
-                    <PressableButton style={headerStyles.headerButton} buttonDownStyle={headerStyles.headerButtonDown} buttonUpStyle={headerStyles.headerButtonUp} onPress={onBackButton}>
+                    <CustomPressable style={headerStyles.headerButton} buttonDownStyle={headerStyles.headerButtonDown} buttonUpStyle={headerStyles.headerButtonUp} onPress={onBackButton}>
                         <Image style={headerStyles.headerButtonIcon} source={backIcon} />
-                    </PressableButton>
-                    : <PressableButton style={[headerStyles.headerButton, headerStyles.headerButtonUp]} buttonUpStyle={headerStyles.headerButtonUp} />
+                    </CustomPressable>
+                    : <CustomPressable style={[headerStyles.headerButton, headerStyles.headerButtonUp]} buttonUpStyle={headerStyles.headerButtonUp} />
                 }
                 <View>
                     <Text style={headerStyles.headerTitleText}>{title}</Text>
                 </View>
                 {onRightButton ?
-                    <PressableButton style={headerStyles.headerButton} buttonDownStyle={headerStyles.headerButtonDown} buttonUpStyle={headerStyles.headerButtonUp} onPress={onRightButton}>
+                    <CustomPressable style={headerStyles.headerButton} buttonDownStyle={headerStyles.headerButtonDown} buttonUpStyle={headerStyles.headerButtonUp} onPress={onRightButton}>
                         <Image style={headerStyles.headerButtonIcon} source={profileIcon} />
-                    </PressableButton>
-                    : <PressableButton style={[headerStyles.headerButton, headerStyles.headerButtonUp]} buttonUpStyle={headerStyles.headerButtonUp} />
+                    </CustomPressable>
+                    : <CustomPressable style={[headerStyles.headerButton, headerStyles.headerButtonUp]} buttonUpStyle={headerStyles.headerButtonUp} />
                 }
             </View>
         </View>

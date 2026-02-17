@@ -3,7 +3,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProjectInfo } from "../../common/types/projectInfo";
-import { EditableProjectHeader } from "../components/foundational/Headers/EditableProjectHeader";
+import { EditableProjectHeader } from "../components/screens/shared/EditableProjectHeader";
 import { useStaticGlobalStyles } from "../styles/global.styles";
 
 export default function Projects() {

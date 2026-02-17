@@ -15,20 +15,21 @@ interface PressableButtonProps {
 	buttonUpStyle?: StyleProp<ViewStyle>;
 }
 
-const PressableButton: React.FC<PressableButtonProps> = (
-	{ children, onPress, onLongPress, onPressIn, longPressDelay, disabled, style, disabledStyle: disabledStyleOverride, buttonDownStyle: buttonDownStyleOverride, buttonUpStyle: buttonUpStyleOverride }
-) => {
+const CustomPressable: React.FC<PressableButtonProps> = ({ children, onPress, onLongPress, onPressIn, longPressDelay, disabled, style, disabledStyle, buttonDownStyle, buttonUpStyle }) => {
 	const globalStyles = useStaticGlobalStyles();
 
 	return (
 		<Pressable onPress={onPress} onLongPress={onLongPress} onPressIn={onPressIn} delayLongPress={longPressDelay} disabled={disabled} style={({ pressed }) => [
 			style ?? globalStyles.button,
-			disabled ? (disabledStyleOverride ?? globalStyles.disabledButton)
-				: pressed ? (buttonDownStyleOverride ?? globalStyles.buttonDown) : (buttonUpStyleOverride ?? globalStyles.buttonUp)
+			disabled
+				? (disabledStyle ?? globalStyles.disabledButton)
+				: pressed
+					? (buttonDownStyle ?? globalStyles.buttonDown)
+					: (buttonUpStyle ?? globalStyles.buttonUp)
 		]}>
 			{children}
 		</Pressable>
 	);
 };
 
-export default PressableButton;
+export default CustomPressable;
