@@ -3,23 +3,23 @@ import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { LowercaseOAuthProvider } from "../../common/types/oAuthProvider";
-import { API_URL } from "../../common/utils/constants";
-import { UserService } from "../../core/auth/user.service";
+import { services } from "../../modules/ServiceManager";
+import { OAuthProvider } from "../../shared/domain/oAuthProvider";
+import { Constants } from "../../shared/utils/constants";
 import { useUserStore } from "../../state/zustand/userStore";
 import CustomPressable from "../components/foundational/CustomPressable";
 import CustomHeader from "../components/foundational/Headers/CustomHeader";
 import OAuthLoginView from "../components/screens/oauthlogin/OAuthLoginView";
-import { useStaticGlobalStyles } from "../styles/global.styles";
+import { useGlobalStyles } from "../styles/global.styles";
 
 const googleImage = require("../../../resources/assets/images/oauth/google-logo.png");
 
 export default function OAuthLogin() {
     const user = useUserStore((state) => state.user);
-    const globalStyles = useStaticGlobalStyles();
+    const globalStyles = useGlobalStyles();
 
-    async function OAuthLogin(provider: LowercaseOAuthProvider) {
-        const uri = `${API_URL}/auth/${provider}`;
+    async function handleLogin(provider: Lowercase<OAuthProvider>) {
+        const uri = `${Constants.API_URL}/auth/${provider}`;
 
         const redirectUri = Linking.createURL("auth-success");
         const result = await WebBrowser.openAuthSessionAsync(uri, redirectUri);
@@ -32,23 +32,23 @@ export default function OAuthLogin() {
                 return;
             }
 
-            UserService.login(code);
+            services.userService.login(code);
         }
     }
 
     return (
         <SafeAreaView style={globalStyles.appContainer}>
-            <CustomHeader title="OAuth Login" />
+            <CustomHeader title="OAuth Login" showRightButton={false} />
             <View style={globalStyles.contentContainer}>
                 {user ? (
                     <>
                         <Text>You are logged in as {user?.username}</Text>
-                        <CustomPressable onPress={UserService.logout}>
+                        <CustomPressable onPress={services.userService.logout}>
                             <Text style={globalStyles.bannerButtonText}>LOG OUT</Text>
                         </CustomPressable>
                     </>
                 ) :
-                    <OAuthLoginView providerImage={googleImage} providerTitle="Google" onPress={() => OAuthLogin("google")} />
+                    <OAuthLoginView providerImage={googleImage} providerTitle="Google" onPress={() => handleLogin("google")} />
                 }
             </View>
         </SafeAreaView>

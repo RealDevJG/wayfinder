@@ -1,22 +1,29 @@
 import { useNavigation } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import { appColourPalette } from "../../../styles/appColourPalette";
+import { Image, ImageSourcePropType, Text, View } from "react-native";
+import { useCustomHeaderStyles } from "../../../styles/components/foundational/CustomHeader.styles";
 import CustomPressable from "../CustomPressable";
 
-// TODO: make profileIcon passable so other icons can be in the top right as well
-const backIcon = require("../../../../../resources/assets/images/global/back-icon.png");
-const profileIcon = require("../../../../../resources/assets/images/global/profile-icon.png");
+const backIcon = require("../../../../../resources/assets/images/global/back-icon.png") as ImageSourcePropType;
+const profileIcon = require("../../../../../resources/assets/images/global/profile-icon.png") as ImageSourcePropType;
 
-interface CustomHeaderProps {
-    title: string,
-    showBackButton?: boolean
+type CustomHeaderProps = {
+    title: string;
+    leftButtonIcon?: ImageSourcePropType;
+    rightButtonIcon?: ImageSourcePropType;
+    onLeftButton?: () => void;
     onRightButton?: () => void;
+    showLeftButton?: boolean;
+    showRightButton?: boolean;
 }
 
-const CustomHeader: React.FC<CustomHeaderProps> = ({ title, showBackButton = true, onRightButton }) => {
+const CustomHeader: React.FC<CustomHeaderProps> = ({ title, leftButtonIcon, rightButtonIcon, onLeftButton, onRightButton, showLeftButton = true, showRightButton = true }) => {
     const navigation = useNavigation();
+    const styles = useCustomHeaderStyles();
+
+    leftButtonIcon ??= backIcon;
+    rightButtonIcon ??= profileIcon;
+    onLeftButton ??= onBackButton;
 
     function onBackButton() {
         if (navigation.canGoBack()) {
@@ -25,75 +32,26 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({ title, showBackButton = tru
     }
 
     return (
-        <View style={headerStyles.headerContainer}>
-            <View style={headerStyles.headerBody}>
-                <StatusBar style="auto" backgroundColor={appColourPalette.statusBar} />
-                {showBackButton ?
-                    <CustomPressable style={headerStyles.headerButton} buttonDownStyle={headerStyles.headerButtonDown} buttonUpStyle={headerStyles.headerButtonUp} onPress={onBackButton}>
-                        <Image style={headerStyles.headerButtonIcon} source={backIcon} />
+        <View style={styles.headerContainer}>
+            <View style={styles.headerBody}>
+                {showLeftButton ?
+                    <CustomPressable style={styles.headerButton} buttonDownStyle={styles.headerButtonDown} buttonUpStyle={styles.headerButtonUp} onPress={onLeftButton}>
+                        <Image style={styles.headerButtonIcon} source={leftButtonIcon} />
                     </CustomPressable>
-                    : <CustomPressable style={[headerStyles.headerButton, headerStyles.headerButtonUp]} buttonUpStyle={headerStyles.headerButtonUp} />
+                    : <CustomPressable style={[styles.headerButton, styles.headerButtonUp]} buttonUpStyle={styles.headerButtonUp} />
                 }
                 <View>
-                    <Text style={headerStyles.headerTitleText}>{title}</Text>
+                    <Text style={styles.headerTitleText}>{title}</Text>
                 </View>
-                {onRightButton ?
-                    <CustomPressable style={headerStyles.headerButton} buttonDownStyle={headerStyles.headerButtonDown} buttonUpStyle={headerStyles.headerButtonUp} onPress={onRightButton}>
-                        <Image style={headerStyles.headerButtonIcon} source={profileIcon} />
+                {showRightButton ?
+                    <CustomPressable style={styles.headerButton} buttonDownStyle={styles.headerButtonDown} buttonUpStyle={styles.headerButtonUp} onPress={onRightButton}>
+                        <Image style={styles.headerButtonIcon} source={rightButtonIcon} />
                     </CustomPressable>
-                    : <CustomPressable style={[headerStyles.headerButton, headerStyles.headerButtonUp]} buttonUpStyle={headerStyles.headerButtonUp} />
+                    : <CustomPressable style={[styles.headerButton, styles.headerButtonUp]} buttonUpStyle={styles.headerButtonUp} />
                 }
             </View>
         </View>
     );
 }
-
-// TODO: put styles in its own file for consistency across the app
-const headerButtonSize = 34;
-
-export const headerStyles = StyleSheet.create({
-    headerContainer: {
-        flex: 1
-    },
-    headerBody: {
-        flex: 1,
-        padding: 5,
-        flexDirection: "row",
-        backgroundColor: appColourPalette.primary,
-        width: "100%",
-        borderBottomWidth: 1,
-        borderBottomColor: appColourPalette.separator,
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
-    headerTitleText: {
-        color: appColourPalette.text,
-        textAlign: "center",
-        fontSize: 24,
-        fontWeight: 400
-    },
-    headerButtonIcon: {
-        width: headerButtonSize,
-        height: headerButtonSize
-    },
-    headerButton: {
-        width: headerButtonSize,
-        height: headerButtonSize,
-        margin: 5,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    headerButtonText: {
-        fontWeight: 600,
-        fontSize: 12,
-        color: appColourPalette.text
-    },
-    headerButtonUp: {
-        backgroundColor: appColourPalette.primary
-    },
-    headerButtonDown: {
-        backgroundColor: appColourPalette.primaryDarker
-    }
-});
 
 export default CustomHeader;

@@ -1,8 +1,8 @@
 import React, { ReactNode } from "react";
 import { Pressable, StyleProp, ViewStyle } from "react-native";
-import { useStaticGlobalStyles } from "../../styles/global.styles";
+import { useGlobalStyles } from "../../styles/global.styles";
 
-interface PressableButtonProps {
+type PressableButtonProps = {
 	children?: ReactNode;
 	onPress?: () => void;
 	onLongPress?: () => void;
@@ -16,7 +16,7 @@ interface PressableButtonProps {
 }
 
 const CustomPressable: React.FC<PressableButtonProps> = ({ children, onPress, onLongPress, onPressIn, longPressDelay, disabled, style, disabledStyle, buttonDownStyle, buttonUpStyle }) => {
-	const globalStyles = useStaticGlobalStyles();
+	const globalStyles = useGlobalStyles();
 
 	return (
 		<Pressable onPress={onPress} onLongPress={onLongPress} onPressIn={onPressIn} delayLongPress={longPressDelay} disabled={disabled} style={({ pressed }) => [

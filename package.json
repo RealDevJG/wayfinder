@@ -7,7 +7,9 @@
     "start:android": "expo start --android",
     "start:ios": "expo start --ios",
     "start:web": "expo start --web",
-    "eas:build:dev:android": "eas build --platform android --profile development"
+    "eas:build:dev:android": "eas build --platform android --profile development",
+    "eas:build:prev:android": "eas build --platform android --profile preview",
+    "eas:build:prod:android": "eas build --platform android --profile production"
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^4.1.1",

@@ -1,17 +1,17 @@
 import React from "react";
-import { ProjectStatus } from "../../../../common/types/projectStatus";
+import { ProjectStatusEnum } from "../../../../modules/projects/domain/projectStatusEnum";
 import Radio from "../../foundational/RadioButtons/Radio";
 import RadioGroup from "../../foundational/RadioButtons/RadioGroup";
 
-interface ProjectStatusSelectorProps {
-    currentStatus: ProjectStatus;
+type ProjectStatusSelectorProps = {
+    currentStatus: ProjectStatusEnum;
     setStatusState?: (value: any) => void;
 }
 
 const ProjectStatusSelector: React.FC<ProjectStatusSelectorProps> = ({ currentStatus, setStatusState }) => {
     return (
         <RadioGroup onChildPressed={(value) => setStatusState?.(value)}>
-            {Object.values(ProjectStatus).map((value, index) => (
+            {Object.values(ProjectStatusEnum).map((value, index) => (
                 <Radio key={index} label={value} selected={currentStatus === value} />
             ))}
         </RadioGroup>

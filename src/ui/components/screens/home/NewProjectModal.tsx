@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import { ProjectInfo } from "../../../../common/types/projectInfo";
-import { ProjectStatus } from "../../../../common/types/projectStatus";
+import { Text, TextInput, View } from "react-native";
+import { ProjectInfo } from "../../../../modules/projects/domain/projectInfo";
+import { ProjectStatusEnum } from "../../../../modules/projects/domain/projectStatusEnum";
 import { appColourPalette } from "../../../styles/appColourPalette";
+import { useNewProjectModalStyles } from "../../../styles/screens/home/home.NewProjectModal.styles";
 import CustomModal from "../../foundational/CustomModal";
 import CustomPressable from "../../foundational/CustomPressable";
 import ProjectStatusSelector from "../shared/ProjectStatusSelector";
 
-interface NewProjectModalProps {
+type NewProjectModalProps = {
     type: "add" | "update";
     isVisible: boolean;
     lastPressedProject: ProjectInfo | null;
     onClose: () => void;
-    onAcceptButton: (title: string, summary: string, status: ProjectStatus) => void;
+    onAcceptButton: (title: string, summary: string, status: ProjectStatusEnum) => void;
 }
 
 const NewProjectModal: React.FC<NewProjectModalProps> = ({ type, isVisible, lastPressedProject, onClose, onAcceptButton }) => {
     const [title, setTitle] = useState<string>("");
     const [summary, setSummary] = useState<string>("");
-    const [status, setStatus] = useState<ProjectStatus>(ProjectStatus.Idea);
+    const [status, setStatus] = useState<ProjectStatusEnum>(ProjectStatusEnum.Idea);
 
+    const styles = useNewProjectModalStyles();
     const acceptButtonText = type[0].toLocaleUpperCase() + type.slice(1);
 
     useEffect(() => {
@@ -32,14 +34,14 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({ type, isVisible, last
 
     function handleClose() {
         onClose();
-        setStatus(ProjectStatus.Idea);
+        setStatus(ProjectStatusEnum.Idea);
     }
 
     function handleAccept() {
         onAcceptButton(title, summary, status);
         onClose();
 
-        setStatus(ProjectStatus.Idea);
+        setStatus(ProjectStatusEnum.Idea);
     }
 
     return (
@@ -65,54 +67,5 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({ type, isVisible, last
         </CustomModal>
     );
 }
-
-const styles = StyleSheet.create({
-    modalTitle: {
-        fontSize: 20,
-        fontWeight: 500
-    },
-    textInputContainer: {
-        alignSelf: "flex-start",
-        justifyContent: "space-between",
-        margin: 3
-    },
-    textInput: {
-        backgroundColor: appColourPalette.secondary,
-        borderColor: appColourPalette.primaryDarker,
-        width: 240,
-        borderWidth: 1,
-        paddingTop: 4,
-        paddingBottom: 4
-    },
-    textInputTitle: {
-        fontSize: 15,
-        marginBottom: 2,
-        fontWeight: 500
-    },
-    summaryTextInput: {
-        height: "auto"
-    },
-    buttonsContainer: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 8,
-        width: "60%"
-    },
-    buttons: {
-        width: "48%",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 3
-    },
-    buttonAdd: {
-        backgroundColor: appColourPalette.primaryDarker
-    },
-    buttonCancelUp: {
-        backgroundColor: appColourPalette.danger
-    },
-    buttonCancelDown: {
-        backgroundColor: appColourPalette.dangerDarker
-    }
-});
 
 export default NewProjectModal;

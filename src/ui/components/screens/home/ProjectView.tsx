@@ -1,16 +1,16 @@
-import { useActionSheet } from "@expo/react-native-action-sheet";
 import React from "react";
 import { Text, View } from "react-native";
-import { ProjectStatus } from "../../../../common/types/projectStatus";
+import { ProjectStatusEnum } from "../../../../modules/projects/domain/projectStatusEnum";
+import { useProjectContextMenu } from "../../../hooks/useScreenDimensions copy";
 import { appColourPalette } from "../../../styles/appColourPalette";
-import { ProjectViewStyles } from "../../../styles/screens/home/home.projectView.styles";
+import { ProjectViewStyles } from "../../../styles/screens/home/home.ProjectView.styles";
 import CustomPressable from "../../foundational/CustomPressable";
 
-interface ProjectViewProps {
+type ProjectViewProps = {
     projectId: string;
     title: string;
     summary?: string;
-    status: ProjectStatus;
+    status: ProjectStatusEnum;
     lastActive: string;
     styles: ProjectViewStyles;
     onPress: () => void;
@@ -19,25 +19,12 @@ interface ProjectViewProps {
     onDelete: () => void;
 }
 
-// TODO: was speeding coding so all this needs refactoring
 const ProjectView = React.memo<ProjectViewProps>(({ projectId, title, summary, status, lastActive, styles, onPress, onEdit, onDelete, onPressIn }) => {
-    const { showActionSheetWithOptions } = useActionSheet();
+    const showProjectContextMenu = useProjectContextMenu();
     const { statusTag, statusStyle } = getStyleAndTag(status);
 
     function handleLongPress() {
-        const options = ["Edit", "DELETE", "Cancel"];
-        const destructiveButtonIndex = 1;
-        const cancelButtonIndex = 2;
-
-        showActionSheetWithOptions({ options, cancelButtonIndex, destructiveButtonIndex },
-            (selectedIndex) => {
-                if (selectedIndex === 0) {
-                    onEdit();
-                } else if (selectedIndex === destructiveButtonIndex) {
-                    onDelete();
-                }
-            }
-        )
+        showProjectContextMenu(onEdit, onDelete);
     }
 
     return (
@@ -47,7 +34,7 @@ const ProjectView = React.memo<ProjectViewProps>(({ projectId, title, summary, s
             buttonUpStyle={styles.containerUp}
             buttonDownStyle={styles.containerDown}
             onPress={onPress}
-            onPressIn={() => onPressIn?.()} // fixes bug where the id isn't set in time before long press is handled
+            onPressIn={() => onPressIn?.()} // fixes bug where the last pressed project isn't set in time before long press is handled
             onLongPress={handleLongPress}
         >
             <Text style={[styles.titleText, styles.infoContainer]}>{title}</Text>
@@ -64,16 +51,19 @@ const ProjectView = React.memo<ProjectViewProps>(({ projectId, title, summary, s
 });
 
 const statusStyles = {
-    [ProjectStatus.Idea]: appColourPalette.projectIdea,
-    [ProjectStatus.Resting]: appColourPalette.projectResting,
-    [ProjectStatus.MidFeature]: appColourPalette.projectMidFeature,
-    [ProjectStatus.OnHold]: appColourPalette.projectOnHold,
-    [ProjectStatus.Completed]: appColourPalette.projectCompleted,
-    [ProjectStatus.Discontinued]: appColourPalette.projectDiscontinued
+    [ProjectStatusEnum.Idea]: appColourPalette.projectIdea,
+    [ProjectStatusEnum.Resting]: appColourPalette.projectResting,
+    [ProjectStatusEnum.MidFeature]: appColourPalette.projectMidFeature,
+    [ProjectStatusEnum.OnHold]: appColourPalette.projectOnHold,
+    [ProjectStatusEnum.Completed]: appColourPalette.projectCompleted,
+    [ProjectStatusEnum.Discontinued]: appColourPalette.projectDiscontinued
 } as const;
 
-function getStyleAndTag(statusTag: ProjectStatus) {
-    const statusStyle = { backgroundColor: statusStyles[statusTag] };
+function getStyleAndTag(statusTag: ProjectStatusEnum) {
+    const statusStyle = {
+        backgroundColor: statusStyles[statusTag]
+    };
+
     return { statusTag, statusStyle };
 }
 

@@ -1,4 +1,4 @@
-export interface AuthenticatedUser {
+export type AuthenticatedUser = {
     userId: string;
     username: string;
     accessToken: string;

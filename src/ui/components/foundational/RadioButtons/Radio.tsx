@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
+import { useRadioStyles } from "../../../styles/components/foundational/Radio.styles";
 import { useRadioGroup } from "./RadioGroup";
 
-interface RadioProps {
+type RadioProps = {
     label: string;
     value?: any;
     selected?: boolean;
@@ -10,6 +11,7 @@ interface RadioProps {
 
 const Radio: React.FC<RadioProps> = ({ label, value, selected }) => {
     const { selectedValue, setSelectedValue, onChildPressed, selectedStyleOverride, stylingForChildren } = useRadioGroup();
+    const styles = useRadioStyles();
 
     value ??= label;
 
@@ -45,35 +47,5 @@ const Radio: React.FC<RadioProps> = ({ label, value, selected }) => {
         </Pressable>
     );
 };
-
-// TODO: put styles in its own file for consistency across the app
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: "row",
-        alignItems: "center"
-    },
-    radioOuter: {
-        width: 22,
-        height: 22,
-        borderRadius: 11,
-        borderWidth: 2,
-        borderColor: "#999999",
-        justifyContent: "center",
-        alignItems: "center",
-        marginRight: 10
-    },
-    radioOuterSelected: {
-        borderColor: "#333333"
-    },
-    radioInner: {
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: "#333333"
-    },
-    label: {
-        fontSize: 16
-    }
-});
 
 export default Radio;

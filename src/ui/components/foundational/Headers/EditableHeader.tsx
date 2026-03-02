@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, ViewProps } from "react-native";
 
-export interface EditableHeaderProps {
+export type EditableHeaderProps = {
     initialTitle: string;
     headerViewStyles: ViewProps | object; // Only meant to pass header dimensions, like height
     renderReadonlyMode: (title: string, onEnterEditMode: () => void) => React.ReactNode;

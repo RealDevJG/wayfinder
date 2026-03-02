@@ -2,19 +2,17 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ProjectInfo } from "../../common/types/projectInfo";
-import { ProjectStatus } from "../../common/types/projectStatus";
-import { WAYFINDER_API_CLIENT } from "../../core/api/axios/clients";
-import { useUserStore } from "../../state/zustand/userStore";
+import { ProjectInfo } from "../../modules/projects/domain/projectInfo";
+import { ProjectStatusEnum } from "../../modules/projects/domain/projectStatusEnum";
+import { services } from "../../modules/ServiceManager";
 import BannerButton from "../components/foundational/BannerButton";
 import CustomHeader from "../components/foundational/Headers/CustomHeader";
 import NewProjectModal from "../components/screens/home/NewProjectModal";
 import ProjectView from "../components/screens/home/ProjectView";
-import { useStaticGlobalStyles } from "../styles/global.styles";
-import { useHomeProjectViewStyles } from "../styles/screens/home/home.projectView.styles";
-import { useStaticHomeStyles } from "../styles/screens/home/home.styles";
+import { useGlobalStyles } from "../styles/global.styles";
+import { useHomeProjectViewStyles } from "../styles/screens/home/home.ProjectView.styles";
+import { useHomeStyles } from "../styles/screens/home/home.styles";
 
-// TODO: was speeding coding so all this needs refactoring
 export default function Home() {
     const [isAddModalVisible, setIsAddModalVisible] = useState<boolean>(false);
     const [isUpdateModalVisible, setIsUpdateModalVisible] = useState<boolean>(false);
@@ -23,9 +21,13 @@ export default function Home() {
 
     const navigation = useNavigation<any>();
 
-    const globalStyles = useStaticGlobalStyles();
-    const staticStyles = useStaticHomeStyles();
+    const globalStyles = useGlobalStyles();
+    const staticStyles = useHomeStyles();
     const projectViewStyles = useHomeProjectViewStyles();
+
+    useFocusEffect(useCallback(() => {
+        updateProjectListUi();
+    }, []));
 
     function gotoLoginScreen() {
         navigation.navigate("OAuthLogin");
@@ -35,50 +37,22 @@ export default function Home() {
         navigation.navigate("Projects", { projectInfo });
     }
 
-    // TODO: when adding offline-usage through local db and request queue, refactor this
-    function fetchProjectData() {
-        const user = useUserStore.getState().user;
-
-        if (!user) {
-            setFetchedProjects(null);
-            return;
-        }
-
-        WAYFINDER_API_CLIENT.get("/projects").then(async (res) => {
-            const projects: ProjectInfo[] = await res.data;
-            setFetchedProjects(projects);
-        }).catch(() => setFetchedProjects(null));
+    function updateProjectListUi() {
+        services.projectService.fetchProjectData()
+            .then((fetchedProjects) => setFetchedProjects(fetchedProjects));
     }
 
-    // TODO: when adding offline-usage through local db and request queue, refactor this
-    function handleAddProject(title: string, summary: string, status: ProjectStatus) {
-        const user = useUserStore.getState().user;
-
-        if (!user) {
-            return;
-        }
-
-        WAYFINDER_API_CLIENT.post("/projects", { title, summary, status })
-            .finally(() => {
-                fetchProjectData();
-            });
+    function handleAddProject(title: string, summary: string, status: ProjectStatusEnum) {
+        services.projectService.addProjectData(title, summary, status)
+            .then(updateProjectListUi);
     }
 
-    // TODO: when adding offline-usage through local db and request queue, refactor this
-    function handleUpdateProject(title: string, summary: string, status: ProjectStatus) {
-        const user = useUserStore.getState().user;
-
-        if (!user) {
-            return;
-        }
-
-        WAYFINDER_API_CLIENT.patch(`/projects/${lastPressedProject!.id}`, { title, summary, status })
-            .finally(() => {
-                fetchProjectData();
-            });
+    function handleUpdateProject(title: string, summary: string, status: ProjectStatusEnum) {
+        services.projectService.updateProjectData(lastPressedProject!.id, title, summary, status)
+            .then(updateProjectListUi);
     }
 
-    function onDelete() {
+    function handleDelete() {
         Alert.alert("Are you sure you want to delete this item?", "It will permanently be gone", [
             {
                 text: "Cancel",
@@ -87,30 +61,15 @@ export default function Home() {
             {
                 text: "DELETE",
                 style: "destructive",
-                onPress: handleDeleteProject
+                onPress: () => services.projectService.deleteProject(lastPressedProject!.id)
+                    .then(updateProjectListUi)
             }
         ]);
     }
 
-    // TODO: when adding offline-usage through local db and request queue, refactor this
-    function handleDeleteProject() {
-        const user = useUserStore.getState().user;
-
-        if (!user) {
-            return;
-        }
-
-        WAYFINDER_API_CLIENT.delete(`/projects/${lastPressedProject!.id}`)
-            .finally(() => {
-                fetchProjectData();
-            });
-    }
-
-    useFocusEffect(useCallback(fetchProjectData, []));
-
     return (
         <SafeAreaView style={globalStyles.appContainer}>
-            <CustomHeader title="Wayfinder" showBackButton={false} onRightButton={gotoLoginScreen} />
+            <CustomHeader title="Wayfinder" showLeftButton={false} onRightButton={gotoLoginScreen} />
             {/* The below View allows for the inner ScrollView to use flex properly */}
             <View style={globalStyles.contentContainer}>
                 <ScrollView style={staticStyles.projectListScrollView}>
@@ -126,7 +85,7 @@ export default function Home() {
                             onPress={() => gotoProjectScreen(project)}
                             onPressIn={() => setLastPressedProject(project)}
                             onEdit={() => setIsUpdateModalVisible(true)}
-                            onDelete={onDelete}
+                            onDelete={handleDelete}
                         />
                     ))}
                 </ScrollView>

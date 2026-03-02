@@ -1,5 +1,5 @@
 import { create } from "zustand/react";
-import { UserProfile } from "../../common/types/userProfile";
+import { UserProfile } from "../../modules/auth/domain/userProfile";
 
 type UserStoreTokenInfo = {
 	accessToken: string | null;

@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { appColourPalette } from "../../appColourPalette";
 
-export const useStaticHomeStyles = () => {
+export const useHomeStyles = () => {
 	return staticHomeStyles;
 };
 

@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
-import { ColorValue, Modal, Pressable, StyleSheet } from "react-native";
+import { ColorValue, Modal, Pressable } from "react-native";
+import { useCustomModalStyles } from "../../styles/components/foundational/CustomModal.styles";
 
-interface CustomModalProps {
+type CustomModalProps = {
     children: ReactNode;
     isVisible: boolean;
     onClose: () => void;
@@ -9,6 +10,8 @@ interface CustomModalProps {
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({ children, isVisible, onClose, containerColour = "white" }) => {
+    const styles = useCustomModalStyles();
+
     return (
         <Modal visible={isVisible} backdropColor={"#00000050"}>
             <Pressable style={styles.overlay} onPress={onClose}>
@@ -19,21 +22,5 @@ const CustomModal: React.FC<CustomModalProps> = ({ children, isVisible, onClose,
         </Modal>
     );
 }
-
-// TODO: put styles in its own file for consistency across the app
-const styles = StyleSheet.create({
-    overlay: {
-        width: "100%",
-        height: "100%",
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    container: {
-        width: "auto",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 8
-    }
-});
 
 export default CustomModal;

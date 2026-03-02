@@ -1,7 +1,7 @@
 import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { appColourPalette } from "../../appColourPalette";
 
-export interface ProjectViewStyles {
+export type ProjectViewStyles = {
 	container: ViewStyle;
 	containerUp: ViewStyle;
 	containerDown: ViewStyle;

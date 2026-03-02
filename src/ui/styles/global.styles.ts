@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { appColourPalette } from "./appColourPalette";
 
-export const useStaticGlobalStyles = () => {
+export const useGlobalStyles = () => {
 	return staticGlobalStyles;
 };
 

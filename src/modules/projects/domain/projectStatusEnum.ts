@@ -1,4 +1,4 @@
-export enum ProjectStatus {
+export enum ProjectStatusEnum {
 	Idea = "Idea",
 	Resting = "Resting",
 	MidFeature = "Mid_Feature",

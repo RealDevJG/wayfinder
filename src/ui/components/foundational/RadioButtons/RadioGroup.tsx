@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import { StyleProp, View, ViewStyle } from "react-native";
 
-interface RadioGroupContextType {
+type RadioGroupContextType = {
     selectedValue: any;
     setSelectedValue: (value: any) => void;
     onChildPressed?: (value: any) => void;
@@ -11,7 +11,7 @@ interface RadioGroupContextType {
 
 const RadioGroupContext = createContext<RadioGroupContextType | null>(null);
 
-interface RadioGroupProps {
+type RadioGroupProps = {
     children: React.ReactNode;
     onChildPressed: (value: any) => void;
     styleOverride?: StyleProp<ViewStyle>;

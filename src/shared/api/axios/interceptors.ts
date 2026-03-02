@@ -1,6 +1,6 @@
-import { secureStoreKeys } from "../../../common/utils/constants";
-import { UserRepository } from "../../auth/user.repository";
-import { UserService } from "../../auth/user.service";
+import { UserRepository } from "../../../modules/auth/user.repository";
+import { services } from "../../../modules/ServiceManager";
+import { Constants } from "../../utils/constants";
 import { WAYFINDER_API_CLIENT } from "./clients";
 
 let refreshPromise: Promise<void | null> | null = null;
@@ -17,7 +17,7 @@ export function setupAxiosInterceptors() {
 
 	apiClient._requestInterceptorId = WAYFINDER_API_CLIENT.interceptors.request.use(
 		async (config) => {
-			const accessToken = await UserRepository.getJwtToken(secureStoreKeys.accessToken);
+			const accessToken = await UserRepository.getJwtToken(Constants.secureStoreKeys.accessToken);
 			config.headers.Authorization = `Bearer ${accessToken}`;
 
 			return config;
@@ -36,13 +36,13 @@ export function setupAxiosInterceptors() {
 
 			original._retry = true;
 
-			refreshPromise ??= UserService.refreshTokens().finally(() => {
+			refreshPromise ??= services.userService.refreshTokens().finally(() => {
 				refreshPromise = null;
 			});
 
 			await refreshPromise;
 
-			const newToken = await UserRepository.getJwtToken(secureStoreKeys.accessToken);
+			const newToken = await UserRepository.getJwtToken(Constants.secureStoreKeys.accessToken);
 
 			if (!newToken) {
 				return Promise.reject(err);
