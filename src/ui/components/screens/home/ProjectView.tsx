@@ -1,10 +1,21 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, TextStyle, View, ViewStyle } from "react-native";
 import { ProjectStatusEnum } from "../../../../modules/projects/domain/projectStatusEnum";
 import { useProjectContextMenu } from "../../../hooks/useScreenDimensions copy";
 import { appColourPalette } from "../../../styles/appColourPalette";
-import { ProjectViewStyles } from "../../../styles/screens/home/home.ProjectView.styles";
 import CustomPressable from "../../foundational/CustomPressable";
+
+export type ProjectViewStyles = {
+    container: ViewStyle;
+    containerUp: ViewStyle;
+    containerDown: ViewStyle;
+    infoContainer: ViewStyle;
+    statusContainer: ViewStyle;
+    statusIcon: ViewStyle;
+    statusText: TextStyle;
+    titleText: TextStyle;
+    summaryText: TextStyle;
+}
 
 type ProjectViewProps = {
     projectId: string;

@@ -1,17 +1,6 @@
-import { StyleSheet, TextStyle, ViewStyle } from "react-native";
+import { StyleSheet } from "react-native";
+import { ProjectViewStyles } from "../../../components/screens/home/ProjectView";
 import { appColourPalette } from "../../appColourPalette";
-
-export type ProjectViewStyles = {
-	container: ViewStyle;
-	containerUp: ViewStyle;
-	containerDown: ViewStyle;
-	infoContainer: ViewStyle;
-	statusContainer: ViewStyle;
-	statusIcon: ViewStyle;
-	statusText: TextStyle;
-	titleText: TextStyle;
-	summaryText: TextStyle;
-}
 
 export function useHomeProjectViewStyles() {
 	return staticProjectViewStyles;
