@@ -8,15 +8,14 @@ import { useGlobalStyles } from "../styles/global.styles";
 
 export default function Projects() {
     const route = useRoute();
-    const { projectInfo } = route.params as { projectInfo: ProjectInfo };
-
     const globalStyles = useGlobalStyles();
+
+    const { projectInfo } = route.params as { projectInfo: ProjectInfo };
 
     return (
         <SafeAreaView style={globalStyles.appContainer}>
             <EditableProjectHeader projectInfo={projectInfo} />
             <View style={globalStyles.contentContainer}>
-                <Text>Test</Text>
                 <Text>{projectInfo.title}</Text>
                 <Text>{projectInfo.status}</Text>
                 <Text>{projectInfo.summary}</Text>

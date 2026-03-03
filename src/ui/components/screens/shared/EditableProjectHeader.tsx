@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
+import { services } from "../../../../modules/ServiceManager";
 import { ProjectInfo } from "../../../../modules/projects/domain/projectInfo";
+import { ProjectStatusEnum } from "../../../../modules/projects/domain/projectStatusEnum";
 import { useCustomHeaderStyles } from "../../../styles/components/foundational/CustomHeader.styles";
 import { useEditableProjectHeaderStyles } from "../../../styles/screens/projects/projects.EditableProjectHeader.styles";
 import BannerButton from "../../foundational/BannerButton";
@@ -10,20 +12,26 @@ import ProjectStatusSelector from "./ProjectStatusSelector";
 
 type EditableProjectHeaderProps = {
     projectInfo: ProjectInfo;
-    onSave?: (newTitle: string) => void;
 }
 
 // TODO: There's a performance concern here where after some app usage, the app lags and stops responding. It also causes the whole emulator to lag. Not sure if it's here, but started this commit
-// TODO: make onSave do something
-const EditableProjectHeader: React.FC<EditableProjectHeaderProps> = ({ projectInfo, onSave = () => { } }) => {
+const EditableProjectHeader: React.FC<EditableProjectHeaderProps> = ({ projectInfo }) => {
+    const [newStatus, setNewStatus] = useState<ProjectStatusEnum>(projectInfo.status);
+
     const baseHeaderStyles = useCustomHeaderStyles();
     const styles = useEditableProjectHeaderStyles();
+
+    function handleSave(newTitle: string) {
+        newTitle ??= projectInfo.title;
+        projectInfo.status = newStatus;
+        services.projectService.updateProjectData(projectInfo.id, newTitle, projectInfo.summary, newStatus);
+    }
 
     return (
         <EditableHeader
             initialTitle={projectInfo.title}
             headerViewStyles={[styles.headerCollapsedView, styles.headerCommon, styles.borderBottom]}
-            onSave={onSave}
+            onSave={handleSave}
             renderReadonlyMode={(title, onEnterEditMode) => (
                 <Pressable onPress={onEnterEditMode}>
                     <CustomHeader title={title} showRightButton={false} />
@@ -39,7 +47,7 @@ const EditableProjectHeader: React.FC<EditableProjectHeaderProps> = ({ projectIn
                     />
                     <View style={styles.statusBlock}>
                         <Text>Status:</Text>
-                        <ProjectStatusSelector currentStatus={projectInfo.status} />
+                        <ProjectStatusSelector currentStatus={projectInfo.status} setStatusState={setNewStatus} />
                     </View>
                     <BannerButton style={styles.doneButtonView} onPress={onExitEditMode} buttonUpStyle={styles.doneButtonUp} buttonDownStyle={styles.doneButtonDown} >
                         <Text style={styles.doneButtonText}>Done</Text>
