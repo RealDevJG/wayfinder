@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, TextStyle, View, ViewStyle } from "react-native";
 import { ProjectStatusEnum } from "../../../../modules/projects/domain/projectStatusEnum";
-import { useProjectContextMenu } from "../../../hooks/useScreenDimensions copy";
+import { useProjectContextMenu } from "../../../hooks/useProjectContextMenu";
 import { appColourPalette } from "../../../styles/appColourPalette";
 import CustomPressable from "../../foundational/CustomPressable";
 
