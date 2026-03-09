@@ -1,16 +1,20 @@
 import { StyleSheet } from "react-native";
+import { useScreenDimensions } from "../../../hooks/useScreenDimensions";
 import { appColourPalette } from "../../appColourPalette";
 
 export function useCustomHeaderStyles() {
-	return staticCustomHeaderStyles;
+	const { height: screenHeight } = useScreenDimensions();
+	const fixedHeaderHeight = screenHeight * 0.0833;
+
+	return {
+		...staticCustomHeaderStyles,
+		headerContainer: { height: fixedHeaderHeight }
+	};
 }
 
 const headerButtonSize = 34;
 
 const staticCustomHeaderStyles = StyleSheet.create({
-	headerContainer: {
-		flex: 1
-	},
 	headerBody: {
 		flex: 1,
 		padding: 5,

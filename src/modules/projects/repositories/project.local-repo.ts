@@ -1,4 +1,4 @@
-import { ProjectInfo } from "../domain/projectInfo";
+import { ProjectInfo, UpdateProjectInfo } from "../domain/projectInfo";
 import { ProjectStatusEnum } from "../domain/projectStatusEnum";
 import { IProjectRepository } from "./project.abstract-repo";
 
@@ -11,7 +11,7 @@ export class LocalProjectRepository implements IProjectRepository {
 		return Promise.resolve();
 	}
 
-	updateProjectData(projectId: string, title: string, summary: string, status: ProjectStatusEnum): Promise<void> {
+	updateProjectData(projectData: UpdateProjectInfo): Promise<void> {
 		return Promise.resolve();
 	}
 

@@ -6,10 +6,8 @@ export function useEditableProjectHeaderStyles() {
 }
 
 const staticEditableProjectHeaderStyles = StyleSheet.create({
-	headerCollapsedView: {
-		flex: 1
-	},
 	headerCommon: {
+		width: "100%",
 		backgroundColor: appColourPalette.primary,
 		justifyContent: "space-between",
 		alignItems: "center"

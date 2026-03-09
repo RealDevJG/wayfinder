@@ -2,7 +2,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ProjectInfo } from "../../modules/projects/domain/projectInfo";
+import { ProjectInfo, UpdateProjectInfo } from "../../modules/projects/domain/projectInfo";
 import { ProjectStatusEnum } from "../../modules/projects/domain/projectStatusEnum";
 import { services } from "../../modules/ServiceManager";
 import BannerButton from "../components/foundational/BannerButton";
@@ -11,7 +11,6 @@ import NewProjectModal from "../components/screens/home/NewProjectModal";
 import ProjectView from "../components/screens/home/ProjectView";
 import { useGlobalStyles } from "../styles/global.styles";
 import { useHomeProjectViewStyles } from "../styles/screens/home/home.ProjectView.styles";
-import { useHomeStyles } from "../styles/screens/home/home.styles";
 
 export default function Home() {
     const [isAddModalVisible, setIsAddModalVisible] = useState<boolean>(false);
@@ -22,7 +21,6 @@ export default function Home() {
     const navigation = useNavigation<any>();
 
     const globalStyles = useGlobalStyles();
-    const staticStyles = useHomeStyles();
     const projectViewStyles = useHomeProjectViewStyles();
 
     useFocusEffect(useCallback(() => {
@@ -48,7 +46,14 @@ export default function Home() {
     }
 
     function handleUpdateProject(title: string, summary: string, status: ProjectStatusEnum) {
-        services.projectService.updateProjectData(lastPressedProject!.id, title, summary, status)
+        const projectData: UpdateProjectInfo = {
+            id: lastPressedProject!.id,
+            title: title,
+            summary: summary,
+            status: status
+        }
+
+        services.projectService.updateProjectData(projectData)
             .then(updateProjectListUi);
     }
 
@@ -72,7 +77,7 @@ export default function Home() {
             <CustomHeader title="Wayfinder" showLeftButton={false} onRightButton={gotoLoginScreen} />
             {/* The below View allows for the inner ScrollView to use flex properly */}
             <View style={globalStyles.contentContainer}>
-                <ScrollView style={staticStyles.projectListScrollView}>
+                <ScrollView style={globalStyles.scrollView}>
                     {fetchedProjects?.toReversed().map((project, index) => (
                         <ProjectView
                             key={index}

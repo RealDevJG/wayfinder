@@ -28,11 +28,6 @@ const staticProjectViewStyles: ProjectViewStyles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between"
 	},
-	statusIcon: {
-		width: 12,
-		height: 12,
-		borderRadius: "100%"
-	},
 	statusText: {
 		color: appColourPalette.text,
 		padding: 2,

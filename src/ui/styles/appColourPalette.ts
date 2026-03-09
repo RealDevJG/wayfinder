@@ -13,6 +13,7 @@ export const appColourPalette = {
 	altText: "#d6e2ff",
 	linkText: "#247ba0",
 	separator: "#003d75",
+	divider: "#838383",
 	disabled: "#cacaca",
 	projectIdea: "#fcfa7b",
 	projectResting: "#80a8ff",

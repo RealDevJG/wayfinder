@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { View, ViewProps } from "react-native";
+import { Pressable, View, ViewStyle } from "react-native";
+import { useEditableHeaderStyles } from "../../../styles/components/foundational/EditableHeader.styles";
 
 export type EditableHeaderProps = {
     initialTitle: string;
-    headerViewStyles: ViewProps | object; // Only meant to pass header dimensions, like height
+    headerViewStyles: ViewStyle | ViewStyle[]; // Only meant to pass header dimensions, like height
     renderReadonlyMode: (title: string, onEnterEditMode: () => void) => React.ReactNode;
     renderEditMode: (title: string, setTitle: (t: string) => void, onExitEditMode: () => void) => React.ReactNode;
     onSave?: (newTitle: string) => void;
@@ -12,6 +13,8 @@ export type EditableHeaderProps = {
 export const EditableHeader: React.FC<EditableHeaderProps> = ({ initialTitle, headerViewStyles, renderReadonlyMode, renderEditMode, onSave }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [title, setTitle] = useState(initialTitle);
+
+    const styles = useEditableHeaderStyles();
 
     function handleEnterEditMode() {
         setIsEditing(true);
@@ -23,11 +26,17 @@ export const EditableHeader: React.FC<EditableHeaderProps> = ({ initialTitle, he
     }
 
     return (
-        <View style={[headerViewStyles, { zIndex: 999 }]}>
-            {isEditing
-                ? renderEditMode(title, setTitle, handleExitEditMode)
-                : renderReadonlyMode(title, handleEnterEditMode)
+        <>
+            <View style={[headerViewStyles, { zIndex: 999 }]}>
+                {isEditing
+                    ? renderEditMode(title, setTitle, handleExitEditMode)
+                    : renderReadonlyMode(title, handleEnterEditMode)
+                }
+            </View>
+            {isEditing ?
+                <Pressable style={[styles.overlay, { zIndex: 998 }]} onPress={handleExitEditMode} />
+                : <></>
             }
-        </View>
+        </>
     );
 };

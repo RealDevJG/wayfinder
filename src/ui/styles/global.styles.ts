@@ -42,6 +42,10 @@ const staticGlobalStyles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center"
 	},
+	scrollView: {
+		width: "100%",
+		backgroundColor: appColourPalette.background
+	},
 	bannerButtonView: {
 		alignItems: "center",
 		padding: 4,
