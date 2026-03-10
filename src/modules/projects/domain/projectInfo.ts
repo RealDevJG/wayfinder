@@ -6,7 +6,7 @@ export type ProjectInfo = {
 	summary: string;
 	status: ProjectStatusEnum;
 	lastActive: string;
-}
+};
 
 export type UpdateProjectInfo = Partial<ProjectInfo> & {
 	id: string;

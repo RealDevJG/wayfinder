@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
 import { appColourPalette } from "../../appColourPalette";
 
-export function useNewProjectModalStyles() {
-	return staticNewProjectModalStyles;
+export function useNewItemModalStyles() {
+	return staticNewItemModalStyles;
 }
 
-const staticNewProjectModalStyles = StyleSheet.create({
+const staticNewItemModalStyles = StyleSheet.create({
 	modalTitle: {
 		fontSize: 20,
 		fontWeight: 500

@@ -9,58 +9,58 @@ import CustomPressable from "../../foundational/CustomPressable";
 type ProjectSnapshotViewProps = {
     snapshotInfo: SnapshotInfo;
     onPress: () => void;
-    onPressIn?: () => void;
-    onEdit: () => void;
     onDelete: () => void;
 }
 
-// TODO: restrict how much text is shown per snapshot on the projects screen, but show it in full for the actual Snapshot.tsx screen
-const ProjectSnapshotView: React.FC<ProjectSnapshotViewProps> = ({ snapshotInfo, onPress, onPressIn, onEdit, onDelete }) => {
-    const styles = useProjectSnapshotViewStyles();
+const fieldMap: Record<SnapshotStopReasonEnum, { label: string; key: keyof SnapshotInfo }[]> = {
+    [SnapshotStopReasonEnum.Blocked]: [
+        { label: "Blockers", key: "blockers" }
+    ],
+    [SnapshotStopReasonEnum.BugFound]: [
+        { label: "Blockers", key: "blockers" },
+        { label: "Last Thoughts", key: "lastThoughts" }
+    ],
+    [SnapshotStopReasonEnum.ResearchRequired]: [
+        { label: "Blockers", key: "blockers" },
+        { label: "Next Steps", key: "nextSteps" }
+    ],
+    [SnapshotStopReasonEnum.SessionEnd]: [
+        { label: "Last Action", key: "lastAction" },
+        { label: "Next Steps", key: "nextSteps" }
+    ]
+};
 
+const ProjectSnapshotView: React.FC<ProjectSnapshotViewProps> = ({ snapshotInfo, onPress, onDelete }) => {
+    const styles = useProjectSnapshotViewStyles();
     const showProjectSnapshotContextMenu = useProjectContextMenu();
 
     function handleLongPress() {
-        showProjectSnapshotContextMenu(onEdit, onDelete);
+        showProjectSnapshotContextMenu(onPress, onDelete);
     }
 
-    // REFACTOR:
     function getAdditionalContent(snapshotType: SnapshotStopReasonEnum) {
-        if (snapshotType === SnapshotStopReasonEnum.Blocked) {
-            return (
-                <>
-                    <Text style={styles.specialisedTextTitle}>Blockers:</Text>
-                    <Text style={styles.specialisedTextBlock}>{snapshotInfo.blockers}</Text>
-                </>
-            );
-        } else if (snapshotType === SnapshotStopReasonEnum.BugFound) {
-            return (
-                <>
-                    <Text style={styles.specialisedTextTitle}>Blockers:</Text>
-                    <Text style={styles.specialisedTextBlock}>{snapshotInfo.blockers}</Text>
-                    <Text style={styles.specialisedTextTitle}>Last Thoughts:</Text>
-                    <Text style={styles.specialisedTextBlock}>{snapshotInfo.lastThoughts}</Text>
-                </>
-            );
-        } else if (snapshotType === SnapshotStopReasonEnum.ResearchRequired) {
-            return (
-                <>
-                    <Text style={styles.specialisedTextTitle}>Blockers:</Text>
-                    <Text style={styles.specialisedTextBlock}>{snapshotInfo.blockers}</Text>
-                    <Text style={styles.specialisedTextTitle}>Next Steps:</Text>
-                    <Text style={styles.specialisedTextBlock}>{snapshotInfo.nextSteps}</Text>
-                </>
-            );
-        } else if (snapshotType === SnapshotStopReasonEnum.SessionEnd) {
-            return (
-                <>
-                    <Text style={styles.specialisedTextTitle}>Last Action:</Text>
-                    <Text style={styles.specialisedTextBlock}>{snapshotInfo.lastAction}</Text>
-                    <Text style={styles.specialisedTextTitle}>Next Steps:</Text>
-                    <Text style={styles.specialisedTextBlock}>{snapshotInfo.nextSteps}</Text>
-                </>
-            );
-        }
+        const fields = fieldMap[snapshotType];
+
+        if (!fields) {
+            return <></>;
+        };
+
+        return (
+            <>
+                {fields.map(({ label, key }) => (
+                    <React.Fragment key={key}>
+                        <Text style={styles.specialisedTextTitle}>{label}:</Text>
+                        <Text
+                            style={styles.specialisedTextBlock}
+                            numberOfLines={2}
+                            ellipsizeMode="tail"
+                        >
+                            {snapshotInfo[key]}
+                        </Text>
+                    </React.Fragment>
+                ))}
+            </>
+        );
     }
 
     function buildSnapshotView(additionalContent: ReactNode) {
@@ -71,17 +71,19 @@ const ProjectSnapshotView: React.FC<ProjectSnapshotViewProps> = ({ snapshotInfo,
                 buttonUpStyle={styles.containerUp}
                 buttonDownStyle={styles.containerDown}
                 onPress={onPress}
-                onPressIn={() => onPressIn?.()} // fixes bug where the last pressed snapshot isn't set in time before long press is handled
                 onLongPress={handleLongPress}
             >
-                <View style={styles.titleContainer}>
+                <View style={styles.horizontalContentContainer}>
                     <Text style={styles.titleText}>Branch:</Text>
                     <Text style={styles.titleText}>{snapshotInfo.gitBranch}</Text>
                 </View>
                 <View style={styles.specialisedContentContainer}>
                     {additionalContent}
                 </View>
-                <Text style={styles.updatedAtText}>{snapshotInfo.updatedAt}</Text>
+                <View style={styles.horizontalContentContainer}>
+                    <Text style={styles.updatedAtText}>{snapshotInfo.updatedAt}</Text>
+                    <Text style={styles.specialisedTextTitle}>{snapshotInfo.stopReason}</Text>
+                </View>
             </CustomPressable>
         );
     }

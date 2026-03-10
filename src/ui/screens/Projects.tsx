@@ -8,6 +8,7 @@ import { SnapshotStopReasonEnum } from "../../modules/snapshots/domain/snapshotS
 import CustomPressable from "../components/foundational/CustomPressable";
 import Section from "../components/foundational/Section";
 import EditableProjectHeader from "../components/screens/projects/EditableProjectHeader";
+import NewSnapshotModal from "../components/screens/projects/NewSnapshotModal";
 import ProjectSnapshotView from "../components/screens/projects/ProjectSnapshotView";
 import { useDebouncedCallback } from "../hooks/useDebouncedCallback";
 import { useGlobalStyles } from "../styles/global.styles";
@@ -17,11 +18,13 @@ const newItemIcon = require("../../../resources/assets/images/global/new-item-ic
 
 export default function Projects() {
     const route = useRoute();
-    const styles = useProjectStyles();
-    const globalStyles = useGlobalStyles();
 
     const { projectInfo } = route.params as { projectInfo: ProjectInfo };
     const [unsavedProjectInfo, setUnsavedProjectInfo] = useState<ProjectInfo>(projectInfo);
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+    const styles = useProjectStyles();
+    const globalStyles = useGlobalStyles();
 
     const debouncedSave = useDebouncedCallback(attemptSaveChanges, 600);
 
@@ -38,8 +41,12 @@ export default function Projects() {
         setUnsavedProjectInfo(project);
     }
 
+    function handleAddSnapshot(branch: string, lastAction: string, stopReason: SnapshotStopReasonEnum) {
+        // TODO: send add snapshot request to backend
+    }
+
     function attemptSaveChanges() {
-        if (projectInfo == unsavedProjectInfo) {
+        if (projectInfo === unsavedProjectInfo) {
             return;
         }
 
@@ -56,7 +63,7 @@ export default function Projects() {
             <CustomPressable
                 buttonUpStyle={styles.newItemButtonUp}
                 buttonDownStyle={styles.newItemButtonDown}
-                onPress={() => alert("pressed add new snapshot")}
+                onPress={() => setIsModalVisible(true)}
             >
                 <Image style={styles.newItemButtonIcon} source={newItemIcon} />
             </CustomPressable>
@@ -79,6 +86,7 @@ export default function Projects() {
                     </Section>
                     <Section title="Snapshots" optionComponent={renderNewSnapshotButton()}>
                         <View style={styles.sectionPadding}>
+                            {/* TODO: Render in latest-first order */}
                             <ProjectSnapshotView snapshotInfo={{
                                 id: "7e1f543f-3cda-4ef7-95b0-c9a648669aa4",
                                 archived: false,
@@ -135,6 +143,7 @@ export default function Projects() {
                     </Section>
                 </ScrollView>
             </View>
+            <NewSnapshotModal isVisible={isModalVisible} onClose={() => setIsModalVisible(false)} onAcceptButton={handleAddSnapshot} />
         </SafeAreaView>
     );
 }

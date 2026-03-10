@@ -6,3 +6,5 @@ export enum ProjectStatusEnum {
 	Completed = "Completed",
 	Discontinued = "Discontinued"
 }
+
+export const DEFAULT_PROJECT_STATUS = ProjectStatusEnum[Object.keys(ProjectStatusEnum)[0] as keyof typeof ProjectStatusEnum];

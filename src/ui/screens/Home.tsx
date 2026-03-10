@@ -81,11 +81,7 @@ export default function Home() {
                     {fetchedProjects?.toReversed().map((project, index) => (
                         <ProjectView
                             key={index}
-                            projectId={index.toString()}
-                            title={project.title}
-                            summary={project.summary}
-                            status={project.status}
-                            lastActive={new Date(project.lastActive).toDateString()}
+                            projectInfo={{ ...project, lastActive: new Date(project.lastActive).toDateString() }}
                             styles={projectViewStyles}
                             onPress={() => gotoProjectScreen(project)}
                             onPressIn={() => setLastPressedProject(project)}

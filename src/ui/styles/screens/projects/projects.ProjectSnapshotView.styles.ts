@@ -18,7 +18,7 @@ const staticProjectSnapshotViewStyles = StyleSheet.create({
 	containerDown: {
 		backgroundColor: appColourPalette.secondaryDarker
 	},
-	titleContainer: {
+	horizontalContentContainer: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		flexWrap: "wrap"
@@ -26,7 +26,7 @@ const staticProjectSnapshotViewStyles = StyleSheet.create({
 	specialisedContentContainer: {
 		margin: 5,
 		borderLeftWidth: 2,
-		borderColor: appColourPalette.divider,
+		borderColor: appColourPalette.divider
 	},
 	specialisedTextTitle: {
 		color: appColourPalette.text,

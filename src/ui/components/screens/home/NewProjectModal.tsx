@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Text, TextInput, View } from "react-native";
 import { ProjectInfo } from "../../../../modules/projects/domain/projectInfo";
-import { ProjectStatusEnum } from "../../../../modules/projects/domain/projectStatusEnum";
+import { DEFAULT_PROJECT_STATUS, ProjectStatusEnum } from "../../../../modules/projects/domain/projectStatusEnum";
 import { appColourPalette } from "../../../styles/appColourPalette";
-import { useNewProjectModalStyles } from "../../../styles/screens/home/home.NewProjectModal.styles";
+import { useNewItemModalStyles } from "../../../styles/components/shared/NewItemModal.styles";
 import CustomModal from "../../foundational/CustomModal";
 import CustomPressable from "../../foundational/CustomPressable";
 import ProjectStatusSelector from "../shared/ProjectStatusSelector";
@@ -19,9 +19,9 @@ type NewProjectModalProps = {
 const NewProjectModal: React.FC<NewProjectModalProps> = ({ type, isVisible, lastPressedProject, onClose, onAcceptButton }) => {
     const [title, setTitle] = useState<string>("");
     const [summary, setSummary] = useState<string>("");
-    const [status, setStatus] = useState<ProjectStatusEnum>(ProjectStatusEnum.Idea);
+    const [status, setStatus] = useState<ProjectStatusEnum>(DEFAULT_PROJECT_STATUS);
 
-    const styles = useNewProjectModalStyles();
+    const styles = useNewItemModalStyles();
     const acceptButtonText = type[0].toLocaleUpperCase() + type.slice(1);
 
     useEffect(() => {
@@ -34,19 +34,19 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({ type, isVisible, last
 
     function handleClose() {
         onClose();
-        setStatus(ProjectStatusEnum.Idea);
+        setStatus(DEFAULT_PROJECT_STATUS);
     }
 
     function handleAccept() {
         onAcceptButton(title, summary, status);
         onClose();
 
-        setStatus(ProjectStatusEnum.Idea);
+        setStatus(DEFAULT_PROJECT_STATUS);
     }
 
     return (
         <CustomModal containerColour={appColourPalette.secondary} isVisible={isVisible} onClose={handleClose}>
-            <Text style={styles.modalTitle}>Add Project</Text>
+            <Text style={styles.modalTitle}>New Project</Text>
             <View style={styles.textInputContainer}>
                 <Text style={styles.textInputTitle}>Title</Text>
                 <TextInput style={styles.textInput} onChangeText={text => setTitle(text)} value={title} autoCapitalize="words" editable />

@@ -4,13 +4,13 @@ export type SnapshotInfo = {
 	id: string;
 	stopReason: SnapshotStopReasonEnum;
 
-	lastAction: String;
-	lastThoughts: String;
-	nextSteps: String;
-	gitBranch: String;
-	blockers: String;
+	lastAction: string;
+	lastThoughts: string;
+	nextSteps: string;
+	gitBranch: string;
+	blockers: string;
 
-    archived: boolean; // TODO: For future archive list of snapshots
+	archived: boolean; // FUTURE: For future archive list of snapshots
 	updatedAt: string;
 };
 

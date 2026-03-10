@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { appColourPalette } from "../../appColourPalette";
 
 export function useRadioStyles() {
 	return staticRadioStyles;
@@ -10,11 +11,11 @@ const staticRadioStyles = StyleSheet.create({
 		alignItems: "center"
 	},
 	radioOuter: {
-		width: 22,
-		height: 22,
-		borderRadius: 11,
+		width: 18,
+		height: 18,
+		borderRadius: "100%",
 		borderWidth: 2,
-		borderColor: "#999999",
+		borderColor: appColourPalette.separator,
 		justifyContent: "center",
 		alignItems: "center",
 		marginRight: 10
