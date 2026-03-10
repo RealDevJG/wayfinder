@@ -1,12 +1,14 @@
 import { useRoute } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { Image, ImageSourcePropType, ScrollView, Text, TextInput, View } from "react-native";
+import { Image, ImageSourcePropType, ScrollView, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProjectInfo, UpdateProjectInfo } from "../../modules/projects/domain/projectInfo";
 import { services } from "../../modules/ServiceManager";
+import { SnapshotStopReasonEnum } from "../../modules/snapshots/domain/snapshotStopReasonEnum";
 import CustomPressable from "../components/foundational/CustomPressable";
 import Section from "../components/foundational/Section";
 import EditableProjectHeader from "../components/screens/projects/EditableProjectHeader";
+import ProjectSnapshotView from "../components/screens/projects/ProjectSnapshotView";
 import { useDebouncedCallback } from "../hooks/useDebouncedCallback";
 import { useGlobalStyles } from "../styles/global.styles";
 import { useProjectStyles } from "../styles/screens/projects/projects.styles";
@@ -77,7 +79,58 @@ export default function Projects() {
                     </Section>
                     <Section title="Snapshots" optionComponent={renderNewSnapshotButton()}>
                         <View style={styles.sectionPadding}>
-                            <Text>TODO: create and add snapshot components to be displayed here</Text>
+                            <ProjectSnapshotView snapshotInfo={{
+                                id: "7e1f543f-3cda-4ef7-95b0-c9a648669aa4",
+                                archived: false,
+
+                                blockers: "Test blocker",
+                                gitBranch: "feature/project-screen-ui",
+                                lastThoughts: "Test thoughts",
+                                lastAction: "Last action test",
+                                nextSteps: "Test next steps",
+                                stopReason: SnapshotStopReasonEnum.Blocked,
+
+                                updatedAt: new Date().toDateString()
+                            }} />
+                            <ProjectSnapshotView snapshotInfo={{
+                                id: "7e1f543f-3cda-4ef7-95b0-c9a648669aa4",
+                                archived: false,
+
+                                blockers: "Test blocker",
+                                gitBranch: "feature/project-screen-ui",
+                                lastThoughts: "Test thoughts",
+                                lastAction: "Last action test",
+                                nextSteps: "Test next steps",
+                                stopReason: SnapshotStopReasonEnum.BugFound,
+
+                                updatedAt: new Date().toDateString()
+                            }} />
+                            <ProjectSnapshotView snapshotInfo={{
+                                id: "7e1f543f-3cda-4ef7-95b0-c9a648669aa4",
+                                archived: false,
+
+                                blockers: "Test blocker",
+                                gitBranch: "feature/project-screen-ui",
+                                lastThoughts: "Test thoughts",
+                                lastAction: "Last action test",
+                                nextSteps: "Test next steps",
+                                stopReason: SnapshotStopReasonEnum.ResearchRequired,
+
+                                updatedAt: new Date().toDateString()
+                            }} />
+                            <ProjectSnapshotView snapshotInfo={{
+                                id: "7e1f543f-3cda-4ef7-95b0-c9a648669aa4",
+                                archived: false,
+
+                                blockers: "Test blocker",
+                                gitBranch: "feature/project-screen-ui",
+                                lastThoughts: "Test thoughts",
+                                lastAction: "Last action test",
+                                nextSteps: "Test next steps",
+                                stopReason: SnapshotStopReasonEnum.SessionEnd,
+
+                                updatedAt: new Date().toDateString()
+                            }} />
                         </View>
                     </Section>
                 </ScrollView>

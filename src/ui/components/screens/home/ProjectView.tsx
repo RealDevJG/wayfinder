@@ -17,7 +17,7 @@ export type ProjectViewStyles = {
 }
 
 type ProjectViewProps = {
-    projectId: string;
+    projectId: string; // TODO: collapse these into just the ProjectInfo type
     title: string;
     summary?: string;
     status: ProjectStatusEnum;
