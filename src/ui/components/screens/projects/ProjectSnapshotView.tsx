@@ -9,6 +9,7 @@ import CustomPressable from "../../foundational/CustomPressable";
 type ProjectSnapshotViewProps = {
     snapshotInfo: SnapshotInfo;
     onPress: () => void;
+    onPressIn?: () => void;
     onDelete: () => void;
 }
 
@@ -30,7 +31,7 @@ const fieldMap: Record<SnapshotStopReasonEnum, { label: string; key: keyof Snaps
     ]
 };
 
-const ProjectSnapshotView: React.FC<ProjectSnapshotViewProps> = ({ snapshotInfo, onPress, onDelete }) => {
+const ProjectSnapshotView: React.FC<ProjectSnapshotViewProps> = ({ snapshotInfo, onPress, onPressIn, onDelete }) => {
     const styles = useProjectSnapshotViewStyles();
     const showProjectSnapshotContextMenu = useProjectContextMenu();
 
@@ -71,6 +72,7 @@ const ProjectSnapshotView: React.FC<ProjectSnapshotViewProps> = ({ snapshotInfo,
                 buttonUpStyle={styles.containerUp}
                 buttonDownStyle={styles.containerDown}
                 onPress={onPress}
+                onPressIn={() => onPressIn?.()} // fixes bug where the last pressed snapshot isn't set in time before long press is handled
                 onLongPress={handleLongPress}
             >
                 <View style={styles.horizontalContentContainer}>

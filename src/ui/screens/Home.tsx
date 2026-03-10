@@ -1,6 +1,6 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
-import { Alert, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProjectInfo, UpdateProjectInfo } from "../../modules/projects/domain/projectInfo";
 import { ProjectStatusEnum } from "../../modules/projects/domain/projectStatusEnum";
@@ -11,6 +11,7 @@ import NewProjectModal from "../components/screens/home/NewProjectModal";
 import ProjectView from "../components/screens/home/ProjectView";
 import { useGlobalStyles } from "../styles/global.styles";
 import { useHomeProjectViewStyles } from "../styles/screens/home/home.ProjectView.styles";
+import { askDelete } from "../utils/askDelete";
 
 export default function Home() {
     const [isAddModalVisible, setIsAddModalVisible] = useState<boolean>(false);
@@ -36,12 +37,12 @@ export default function Home() {
     }
 
     function updateProjectListUi() {
-        services.projectService.fetchProjectData()
+        services.projectService.fetchProjects()
             .then((fetchedProjects) => setFetchedProjects(fetchedProjects));
     }
 
     function handleAddProject(title: string, summary: string, status: ProjectStatusEnum) {
-        services.projectService.addProjectData(title, summary, status)
+        services.projectService.newProject(title, summary, status)
             .then(updateProjectListUi);
     }
 
@@ -53,23 +54,16 @@ export default function Home() {
             status: status
         }
 
-        services.projectService.updateProjectData(projectData)
+        services.projectService.updateProject(projectData)
             .then(updateProjectListUi);
     }
 
     function handleDelete() {
-        Alert.alert("Are you sure you want to delete this item?", "It will permanently be gone", [
-            {
-                text: "Cancel",
-                style: "cancel",
-            },
-            {
-                text: "DELETE",
-                style: "destructive",
-                onPress: () => services.projectService.deleteProject(lastPressedProject!.id)
-                    .then(updateProjectListUi)
-            }
-        ]);
+        const onConfirm = () => services.projectService
+            .deleteProject(lastPressedProject!.id)
+            .then(updateProjectListUi);
+
+        askDelete(onConfirm);
     }
 
     return (

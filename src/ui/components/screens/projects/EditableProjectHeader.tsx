@@ -32,7 +32,7 @@ const EditableProjectHeader: React.FC<EditableProjectHeaderProps> = ({ projectIn
             status: newStatus
         }
 
-        services.projectService.updateProjectData(projectData);
+        services.projectService.updateProject(projectData);
     }
 
     return (
