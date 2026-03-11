@@ -1,11 +1,12 @@
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Image, ImageSourcePropType, ScrollView, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProjectInfo, UpdateProjectInfo } from "../../modules/projects/domain/projectInfo";
 import { services } from "../../modules/ServiceManager";
 import { SnapshotInfo } from "../../modules/snapshots/domain/snapshotInfo";
 import { SnapshotStopReasonEnum } from "../../modules/snapshots/domain/snapshotStopReasonEnum";
+import { Constants } from "../../shared/utils/constants";
 import CustomPressable from "../components/foundational/CustomPressable";
 import Section from "../components/foundational/Section";
 import EditableProjectHeader from "../components/screens/projects/EditableProjectHeader";
@@ -18,7 +19,7 @@ import { askDelete } from "../utils/askDelete";
 
 const newItemIcon = require("../../../resources/assets/images/global/new-item-icon.png") as ImageSourcePropType;
 
-export default function Projects() {
+export default function ProjectScreen() {
     const route = useRoute();
     const navigation = useNavigation<any>();
 
@@ -31,7 +32,19 @@ export default function Projects() {
     const styles = useProjectStyles();
     const globalStyles = useGlobalStyles();
 
-    const debouncedSave = useDebouncedCallback(attemptSaveChanges, 600);
+    const debouncedSave = useDebouncedCallback(attemptSaveChanges, Constants.AUTO_SAVE_MS);
+
+    const sortedSnapshots = useMemo(() => {
+        if (!fetchedSnapshots) {
+            return [];
+        }
+
+        return [...fetchedSnapshots].sort((a, b) => {
+            const dateA = new Date(a.updatedAt).getTime();
+            const dateB = new Date(b.updatedAt).getTime();
+            return dateB - dateA;
+        });
+    }, [fetchedSnapshots]);
 
     useEffect(() => {
         debouncedSave();
@@ -113,7 +126,7 @@ export default function Projects() {
                     </Section>
                     <Section title="Snapshots" optionComponent={renderNewSnapshotButton()}>
                         <View style={styles.sectionPadding}>
-                            {fetchedSnapshots?.toReversed().map((snapshot, index) => (
+                            {sortedSnapshots.map((snapshot, index) => (
                                 <ProjectSnapshotView
                                     key={index}
                                     snapshotInfo={{ ...snapshot, updatedAt: new Date(snapshot.updatedAt).toDateString() }}

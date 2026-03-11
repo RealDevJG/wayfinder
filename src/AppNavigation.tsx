@@ -1,17 +1,19 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import Home from "./ui/screens/Home";
-import OAuthLogin from "./ui/screens/OAuthLogin";
-import Projects from "./ui/screens/Projects";
+import HomeScreen from "./ui/screens/HomeScreen";
+import OAuthLoginScreen from "./ui/screens/OAuthLoginScreen";
+import ProjectScreen from "./ui/screens/ProjectScreen";
+import SnapshotScreen from "./ui/screens/SnapshotScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
     return (
         <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-            <Stack.Screen name="OAuthLogin" component={OAuthLogin} options={{ headerShown: false }} />
-            <Stack.Screen name="Projects" component={Projects} options={{ headerShown: false }} />
+            <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="OAuthLogin" component={OAuthLoginScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Project" component={ProjectScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Snapshot" component={SnapshotScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }

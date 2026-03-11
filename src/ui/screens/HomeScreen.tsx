@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProjectInfo, UpdateProjectInfo } from "../../modules/projects/domain/projectInfo";
@@ -13,7 +13,7 @@ import { useGlobalStyles } from "../styles/global.styles";
 import { useHomeProjectViewStyles } from "../styles/screens/home/home.ProjectView.styles";
 import { askDelete } from "../utils/askDelete";
 
-export default function Home() {
+export default function HomeScreen() {
     const [isAddModalVisible, setIsAddModalVisible] = useState<boolean>(false);
     const [isUpdateModalVisible, setIsUpdateModalVisible] = useState<boolean>(false);
     const [fetchedProjects, setFetchedProjects] = useState<ProjectInfo[] | null>(null);
@@ -28,12 +28,24 @@ export default function Home() {
         updateProjectListUi();
     }, []));
 
+    const sortedProjects = useMemo(() => {
+        if (!fetchedProjects) {
+            return [];
+        }
+
+        return [...fetchedProjects].sort((a, b) => {
+            const dateA = new Date(a.lastActive).getTime();
+            const dateB = new Date(b.lastActive).getTime();
+            return dateB - dateA;
+        });
+    }, [fetchedProjects]);
+
     function gotoLoginScreen() {
         navigation.navigate("OAuthLogin");
     }
 
     function gotoProjectScreen(projectInfo: ProjectInfo) {
-        navigation.navigate("Projects", { projectInfo });
+        navigation.navigate("Project", { projectInfo });
     }
 
     function updateProjectListUi() {
@@ -72,7 +84,7 @@ export default function Home() {
             {/* The below View allows for the inner ScrollView to use flex properly */}
             <View style={globalStyles.contentContainer}>
                 <ScrollView style={globalStyles.scrollView}>
-                    {fetchedProjects?.toReversed().map((project, index) => (
+                    {sortedProjects.map((project, index) => (
                         <ProjectView
                             key={index}
                             projectInfo={{ ...project, lastActive: new Date(project.lastActive).toDateString() }}

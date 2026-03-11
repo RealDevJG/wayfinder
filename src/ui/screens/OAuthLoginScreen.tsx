@@ -14,7 +14,7 @@ import { useGlobalStyles } from "../styles/global.styles";
 
 const googleImage = require("../../../resources/assets/images/oauth/google-logo.png");
 
-export default function OAuthLogin() {
+export default function OAuthLoginScreen() {
     const user = useUserStore((state) => state.user);
     const globalStyles = useGlobalStyles();
 
