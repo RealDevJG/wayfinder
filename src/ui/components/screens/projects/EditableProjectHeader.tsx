@@ -3,6 +3,7 @@ import { Pressable, Text, TextInput, View } from "react-native";
 import { services } from "../../../../modules/ServiceManager";
 import { ProjectInfo, UpdateProjectInfo } from "../../../../modules/projects/domain/projectInfo";
 import { ProjectStatusEnum } from "../../../../modules/projects/domain/projectStatusEnum";
+import { colourPalette } from "../../../styles/colourPalette";
 import { useCustomHeaderStyles } from "../../../styles/components/foundational/CustomHeader.styles";
 import { useEditableProjectHeaderStyles } from "../../../styles/screens/projects/projects.EditableProjectHeader.styles";
 import BannerButton from "../../foundational/BannerButton";
@@ -55,6 +56,7 @@ const EditableProjectHeader: React.FC<EditableProjectHeaderProps> = ({ projectIn
                             value={title}
                             onChangeText={setTitle}
                             style={[baseHeaderStyles.headerTitleText, styles.borderBottom]}
+                            selectionColor={colourPalette.accent}
                             autoFocus
                         />
                         <View style={styles.statusBlock}>

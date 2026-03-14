@@ -13,6 +13,7 @@ import EditableProjectHeader from "../components/screens/projects/EditableProjec
 import NewSnapshotModal from "../components/screens/projects/NewSnapshotModal";
 import ProjectSnapshotView from "../components/screens/projects/ProjectSnapshotView";
 import { useDebouncedCallback } from "../hooks/useDebouncedCallback";
+import { colourPalette } from "../styles/colourPalette";
 import { useGlobalStyles } from "../styles/global.styles";
 import { useProjectStyles } from "../styles/screens/projects/projects.styles";
 import { askDelete } from "../utils/askDelete";
@@ -118,6 +119,7 @@ export default function ProjectScreen() {
                     <Section title="Summary">
                         <TextInput
                             value={unsavedProjectInfo.summary}
+                            selectionColor={colourPalette.accent}
                             onChangeText={text => handleSummaryChanged(text)}
                             numberOfLines={12}
                             multiline

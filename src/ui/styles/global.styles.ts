@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { appColourPalette } from "./appColourPalette";
+import { colourPalette } from "./colourPalette";
 
 export const useGlobalStyles = () => {
 	return staticGlobalStyles;
@@ -19,24 +19,24 @@ const staticGlobalStyles = StyleSheet.create({
 	button: buttonView,
 	circularButton: circularButtonView,
 	buttonUp: {
-		backgroundColor: appColourPalette.accent
+		backgroundColor: colourPalette.accent
 	},
 	buttonDown: {
-		backgroundColor: appColourPalette.accentDarker
+		backgroundColor: colourPalette.accentDarker
 	},
 	disabledButton: {
-		backgroundColor: appColourPalette.disabled
+		backgroundColor: colourPalette.disabled
 	},
 	appContainer: {
 		flex: 1,
-		backgroundColor: appColourPalette.statusBar,
+		backgroundColor: colourPalette.statusBar,
 		alignItems: "center",
 		justifyContent: "center",
 		marginTop: 0
 	},
 	contentContainer: {
 		flex: 11,
-		backgroundColor: appColourPalette.background,
+		backgroundColor: colourPalette.background,
 		width: "100%",
 		height: "100%",
 		justifyContent: "center",
@@ -44,24 +44,24 @@ const staticGlobalStyles = StyleSheet.create({
 	},
 	scrollView: {
 		width: "100%",
-		backgroundColor: appColourPalette.background
+		backgroundColor: colourPalette.background
 	},
 	bannerButtonView: {
 		alignItems: "center",
 		padding: 4,
 		borderTopWidth: 1,
 		borderBottomWidth: 1,
-		borderTopColor: appColourPalette.separator,
-		borderBottomColor: appColourPalette.separator
+		borderTopColor: colourPalette.separator,
+		borderBottomColor: colourPalette.separator
 	},
 	bannerButtonUp: {
-		backgroundColor: appColourPalette.primary
+		backgroundColor: colourPalette.primary
 	},
 	bannerButtonDown: {
-		backgroundColor: appColourPalette.primaryDarker
+		backgroundColor: colourPalette.primaryDarker
 	},
 	bannerButtonText: {
-		color: appColourPalette.text,
+		color: colourPalette.text,
 		fontSize: 16
 	}
 });

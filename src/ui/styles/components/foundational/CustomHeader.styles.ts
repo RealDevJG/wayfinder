@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { useScreenDimensions } from "../../../hooks/useScreenDimensions";
-import { appColourPalette } from "../../appColourPalette";
+import { colourPalette } from "../../colourPalette";
 
 export function useCustomHeaderStyles() {
 	const { height: screenHeight } = useScreenDimensions();
@@ -19,15 +19,15 @@ const staticCustomHeaderStyles = StyleSheet.create({
 		flex: 1,
 		padding: 5,
 		flexDirection: "row",
-		backgroundColor: appColourPalette.primary,
+		backgroundColor: colourPalette.primary,
 		width: "100%",
 		borderBottomWidth: 1,
-		borderBottomColor: appColourPalette.separator,
+		borderBottomColor: colourPalette.separator,
 		justifyContent: "space-between",
 		alignItems: "center"
 	},
 	headerTitleText: {
-		color: appColourPalette.text,
+		color: colourPalette.text,
 		textAlign: "center",
 		fontSize: 24,
 		fontWeight: 400
@@ -46,12 +46,12 @@ const staticCustomHeaderStyles = StyleSheet.create({
 	headerButtonText: {
 		fontWeight: 600,
 		fontSize: 12,
-		color: appColourPalette.text
+		color: colourPalette.text
 	},
 	headerButtonUp: {
-		backgroundColor: appColourPalette.primary
+		backgroundColor: colourPalette.primary
 	},
 	headerButtonDown: {
-		backgroundColor: appColourPalette.primaryDarker
+		backgroundColor: colourPalette.primaryDarker
 	}
 });

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { appColourPalette } from "../../appColourPalette";
+import { colourPalette } from "../../colourPalette";
 
 export function useSectionStyles() {
 	return staticSectionStyles;
@@ -15,11 +15,11 @@ const staticSectionStyles = StyleSheet.create({
 	},
 	headerText: {
 		fontSize: 16,
-		color: appColourPalette.text
+		color: colourPalette.text
 	},
 	dividerCommon: {
 		height: 2,
-		backgroundColor: appColourPalette.divider
+		backgroundColor: colourPalette.divider
 	},
 	edgeDivider: {
 		flex: 1

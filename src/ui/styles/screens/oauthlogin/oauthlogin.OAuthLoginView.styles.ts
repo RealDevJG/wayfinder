@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { appColourPalette } from "../../appColourPalette";
+import { colourPalette } from "../../colourPalette";
 
 export function useOAuthViewStyles() {
 	return staticOAuthViewStyles;
@@ -11,13 +11,13 @@ const staticOAuthViewStyles = StyleSheet.create({
 		padding: 5,
 		borderTopWidth: 1,
 		borderBottomWidth: 1,
-		borderColor: appColourPalette.separator
+		borderColor: colourPalette.separator
 	},
 	containerButtonUp: {
-		backgroundColor: appColourPalette.secondary
+		backgroundColor: colourPalette.secondary
 	},
 	containerButtonDown: {
-		backgroundColor: appColourPalette.secondaryDarker
+		backgroundColor: colourPalette.secondaryDarker
 	},
 	containerContents: {
 		flex: 1,

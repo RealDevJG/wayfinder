@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { appColourPalette } from "../../appColourPalette";
+import { colourPalette } from "../../colourPalette";
 
 export function useProjectSnapshotViewStyles() {
 	return staticProjectSnapshotViewStyles;
@@ -8,15 +8,15 @@ export function useProjectSnapshotViewStyles() {
 const staticProjectSnapshotViewStyles = StyleSheet.create({
 	container: {
 		borderWidth: 1,
-		borderColor: appColourPalette.separator,
+		borderColor: colourPalette.separator,
 		padding: "2%",
 		marginBottom: 7
 	},
 	containerUp: {
-		backgroundColor: appColourPalette.secondary
+		backgroundColor: colourPalette.secondary
 	},
 	containerDown: {
-		backgroundColor: appColourPalette.secondaryDarker
+		backgroundColor: colourPalette.secondaryDarker
 	},
 	horizontalContentContainer: {
 		flexDirection: "row",
@@ -26,27 +26,27 @@ const staticProjectSnapshotViewStyles = StyleSheet.create({
 	specialisedContentContainer: {
 		margin: 5,
 		borderLeftWidth: 2,
-		borderColor: appColourPalette.divider
+		borderColor: colourPalette.divider
 	},
 	specialisedTextTitle: {
-		color: appColourPalette.text,
+		color: colourPalette.text,
 		fontSize: 14,
 		fontWeight: 600,
 		margin: 1,
 		marginLeft: 4
 	},
 	specialisedTextBlock: {
-		color: appColourPalette.text,
+		color: colourPalette.text,
 		margin: 1,
 		marginLeft: 8
 	},
 	titleText: {
-		color: appColourPalette.text,
+		color: colourPalette.text,
 		fontSize: 16,
 		fontWeight: 700
 	},
 	updatedAtText: {
-		color: appColourPalette.text,
+		color: colourPalette.text,
 		fontStyle: "italic"
 	}
 });

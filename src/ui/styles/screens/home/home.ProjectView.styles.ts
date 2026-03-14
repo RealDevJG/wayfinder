@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { ProjectViewStyles } from "../../../components/screens/home/ProjectView";
-import { appColourPalette } from "../../appColourPalette";
+import { colourPalette } from "../../colourPalette";
 
 export function useHomeProjectViewStyles() {
 	return staticProjectViewStyles;
@@ -11,14 +11,14 @@ const staticProjectViewStyles: ProjectViewStyles = StyleSheet.create({
 		width: "100%",
 		height: "auto",
 		borderBottomWidth: 1,
-		borderBottomColor: appColourPalette.separator,
+		borderBottomColor: colourPalette.separator,
 		padding: "2%"
 	},
 	containerUp: {
-		backgroundColor: appColourPalette.secondary
+		backgroundColor: colourPalette.secondary
 	},
 	containerDown: {
-		backgroundColor: appColourPalette.secondaryDarker
+		backgroundColor: colourPalette.secondaryDarker
 	},
 	infoContainer: {
 		margin: 3
@@ -29,17 +29,17 @@ const staticProjectViewStyles: ProjectViewStyles = StyleSheet.create({
 		justifyContent: "space-between"
 	},
 	statusText: {
-		color: appColourPalette.text,
+		color: colourPalette.text,
 		padding: 2,
 		paddingLeft: 6
 	},
 	titleText: {
-		color: appColourPalette.text,
+		color: colourPalette.text,
 		fontSize: 16,
 		fontWeight: 600
 	},
 	summaryText: {
-		color: appColourPalette.text,
+		color: colourPalette.text,
 		fontStyle: "italic"
 	}
 });

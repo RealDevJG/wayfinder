@@ -1,4 +1,4 @@
-export const appColourPalette = {
+export const colourPalette = {
 	statusBar: "#939aff",
 	background: "#cfd7ff",
 	primary: "#a9b0ff",

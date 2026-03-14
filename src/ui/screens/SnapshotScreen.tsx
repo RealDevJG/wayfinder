@@ -10,6 +10,7 @@ import CustomHeader from "../components/foundational/Headers/CustomHeader";
 import Section from "../components/foundational/Section";
 import SnapshotStopReasonSelector from "../components/screens/shared/SnapshotStopReasonSelector";
 import { useDebouncedCallback } from "../hooks/useDebouncedCallback";
+import { colourPalette } from "../styles/colourPalette";
 import { useGlobalStyles } from "../styles/global.styles";
 
 const textFields: Array<{ key: keyof SnapshotInfo; title: string; multiline?: boolean }> = [
@@ -58,6 +59,7 @@ export default function SnapshotScreen() {
                             <TextInput
                                 value={String(snapshot[key] || "")}
                                 onChangeText={text => updateField(key, text)}
+                                selectionColor={colourPalette.text}
                                 editable
                                 {...(multiline && {
                                     multiline: true,
