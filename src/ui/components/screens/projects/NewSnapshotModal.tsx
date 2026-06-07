@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, TextInput, View } from "react-native";
 import { DEFAULT_SNAPSHOT_STOP_REASON, SnapshotStopReasonEnum } from "../../../../modules/snapshots/domain/snapshotStopReasonEnum";
-import { appColourPalette } from "../../../styles/appColourPalette";
+import { colourPalette } from "../../../styles/colourPalette";
 import { useNewItemModalStyles } from "../../../styles/components/shared/NewItemModal.styles";
 import CustomModal from "../../foundational/CustomModal";
 import CustomPressable from "../../foundational/CustomPressable";
@@ -33,15 +33,30 @@ const NewSnapshotModal: React.FC<NewSnapshotModalProps> = ({ isVisible, onClose,
     }
 
     return (
-        <CustomModal containerColour={appColourPalette.secondary} isVisible={isVisible} onClose={handleClose}>
+        <CustomModal containerColour={colourPalette.secondary} isVisible={isVisible} onClose={handleClose}>
             <Text style={styles.modalTitle}>New Snapshot</Text>
             <View style={styles.textInputContainer}>
                 <Text style={styles.textInputTitle}>Branch</Text>
-                <TextInput style={styles.textInput} onChangeText={text => setBranch(text)} value={branch} autoCapitalize="words" editable />
+                <TextInput
+                    style={styles.textInput}
+                    selectionColor={colourPalette.accent}
+                    onChangeText={text => setBranch(text)}
+                    value={branch}
+                    autoCapitalize="words"
+                    editable
+                />
             </View>
             <View style={styles.textInputContainer}>
                 <Text style={styles.textInputTitle}>Last Action</Text>
-                <TextInput style={[styles.textInput, styles.summaryTextInput]} onChangeText={text => setLastAction(text)} value={lastAction} multiline numberOfLines={10} editable />
+                <TextInput
+                    style={[styles.textInput, styles.summaryTextInput]}
+                    selectionColor={colourPalette.accent}
+                    onChangeText={text => setLastAction(text)}
+                    value={lastAction}
+                    numberOfLines={10}
+                    multiline
+                    editable
+                />
             </View>
             <SnapshotStopReasonSelector currentStopReason={stopReason} setStopReasonState={setStopReason} />
             <View style={styles.buttonsContainer}>

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { appColourPalette } from "../../appColourPalette";
+import { colourPalette } from "../../colourPalette";
 
 export function useNewItemModalStyles() {
 	return staticNewItemModalStyles;
@@ -16,8 +16,8 @@ const staticNewItemModalStyles = StyleSheet.create({
 		margin: 3
 	},
 	textInput: {
-		backgroundColor: appColourPalette.secondary,
-		borderColor: appColourPalette.primaryDarker,
+		backgroundColor: colourPalette.secondary,
+		borderColor: colourPalette.primaryDarker,
 		width: 240,
 		borderWidth: 1,
 		paddingTop: 4,
@@ -44,12 +44,12 @@ const staticNewItemModalStyles = StyleSheet.create({
 		padding: 3
 	},
 	buttonAdd: {
-		backgroundColor: appColourPalette.primaryDarker
+		backgroundColor: colourPalette.primaryDarker
 	},
 	buttonCancelUp: {
-		backgroundColor: appColourPalette.danger
+		backgroundColor: colourPalette.danger
 	},
 	buttonCancelDown: {
-		backgroundColor: appColourPalette.dangerDarker
+		backgroundColor: colourPalette.dangerDarker
 	}
 });

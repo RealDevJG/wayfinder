@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Text, TextInput, View } from "react-native";
 import { ProjectInfo } from "../../../../modules/projects/domain/projectInfo";
 import { DEFAULT_PROJECT_STATUS, ProjectStatusEnum } from "../../../../modules/projects/domain/projectStatusEnum";
-import { appColourPalette } from "../../../styles/appColourPalette";
+import { colourPalette } from "../../../styles/colourPalette";
 import { useNewItemModalStyles } from "../../../styles/components/shared/NewItemModal.styles";
 import CustomModal from "../../foundational/CustomModal";
 import CustomPressable from "../../foundational/CustomPressable";
@@ -45,15 +45,30 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({ type, isVisible, last
     }
 
     return (
-        <CustomModal containerColour={appColourPalette.secondary} isVisible={isVisible} onClose={handleClose}>
+        <CustomModal containerColour={colourPalette.secondary} isVisible={isVisible} onClose={handleClose}>
             <Text style={styles.modalTitle}>New Project</Text>
             <View style={styles.textInputContainer}>
                 <Text style={styles.textInputTitle}>Title</Text>
-                <TextInput style={styles.textInput} onChangeText={text => setTitle(text)} value={title} autoCapitalize="words" editable />
+                <TextInput
+                    style={styles.textInput}
+                    selectionColor={colourPalette.accent}
+                    onChangeText={text => setTitle(text)}
+                    value={title}
+                    autoCapitalize="words"
+                    editable
+                />
             </View>
             <View style={styles.textInputContainer}>
                 <Text style={styles.textInputTitle}>Summary</Text>
-                <TextInput style={[styles.textInput, styles.summaryTextInput]} onChangeText={text => setSummary(text)} value={summary} multiline numberOfLines={10} editable />
+                <TextInput
+                    style={[styles.textInput, styles.summaryTextInput]}
+                    selectionColor={colourPalette.accent}
+                    onChangeText={text => setSummary(text)}
+                    value={summary}
+                    numberOfLines={10}
+                    multiline
+                    editable
+                />
             </View>
             <ProjectStatusSelector currentStatus={status} setStatusState={setStatus} />
             <View style={styles.buttonsContainer}>

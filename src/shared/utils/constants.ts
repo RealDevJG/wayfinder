@@ -21,4 +21,6 @@ export namespace Constants {
 		baseURL: API_URL,
 		timeout: 5000
 	};
+
+	export const AUTO_SAVE_MS = 600;
 }

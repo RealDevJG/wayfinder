@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, ViewStyle } from "react-native";
 import { ProjectStatusEnum } from "../../../../modules/projects/domain/projectStatusEnum";
-import { appColourPalette } from "../../../styles/appColourPalette";
+import { colourPalette } from "../../../styles/colourPalette";
 import { useProjectStatusViewStyles } from "../../../styles/components/shared/ProjectStatusView.styles";
 
 type ProjectStatusViewProps = {
@@ -22,12 +22,12 @@ const ProjectStatusView = React.memo<ProjectStatusViewProps>(({ status, addition
 });
 
 const statusStyles = {
-    [ProjectStatusEnum.Idea]: appColourPalette.projectIdea,
-    [ProjectStatusEnum.Resting]: appColourPalette.projectResting,
-    [ProjectStatusEnum.MidFeature]: appColourPalette.projectMidFeature,
-    [ProjectStatusEnum.OnHold]: appColourPalette.projectOnHold,
-    [ProjectStatusEnum.Completed]: appColourPalette.projectCompleted,
-    [ProjectStatusEnum.Discontinued]: appColourPalette.projectDiscontinued
+    [ProjectStatusEnum.Idea]: colourPalette.projectIdea,
+    [ProjectStatusEnum.Resting]: colourPalette.projectResting,
+    [ProjectStatusEnum.MidFeature]: colourPalette.projectMidFeature,
+    [ProjectStatusEnum.OnHold]: colourPalette.projectOnHold,
+    [ProjectStatusEnum.Completed]: colourPalette.projectCompleted,
+    [ProjectStatusEnum.Discontinued]: colourPalette.projectDiscontinued
 } as const;
 
 function getStyleAndTag(statusTag: ProjectStatusEnum) {

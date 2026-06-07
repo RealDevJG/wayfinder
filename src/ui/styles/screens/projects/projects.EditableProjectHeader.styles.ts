@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { appColourPalette } from "../../appColourPalette";
+import { colourPalette } from "../../colourPalette";
 
 export function useEditableProjectHeaderStyles() {
 	return staticEditableProjectHeaderStyles;
@@ -8,13 +8,13 @@ export function useEditableProjectHeaderStyles() {
 const staticEditableProjectHeaderStyles = StyleSheet.create({
 	headerCommon: {
 		width: "100%",
-		backgroundColor: appColourPalette.primary,
+		backgroundColor: colourPalette.primary,
 		justifyContent: "space-between",
 		alignItems: "center"
 	},
 	borderBottom: {
 		borderBottomWidth: 1,
-		borderBottomColor: appColourPalette.separator,
+		borderBottomColor: colourPalette.separator,
 		width: "100%"
 	},
 	statusBlock: {
@@ -27,12 +27,12 @@ const staticEditableProjectHeaderStyles = StyleSheet.create({
 		alignItems: "center"
 	},
 	doneButtonText: {
-		color: appColourPalette.text
+		color: colourPalette.text
 	},
 	doneButtonUp: {
-		backgroundColor: appColourPalette.accent
+		backgroundColor: colourPalette.accent
 	},
 	doneButtonDown: {
-		backgroundColor: appColourPalette.accentDarker
+		backgroundColor: colourPalette.accentDarker
 	}
 });

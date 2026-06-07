@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { appColourPalette } from "../../appColourPalette";
+import { colourPalette } from "../../colourPalette";
 
 export function useProjectStatusViewStyles() {
 	return staticProjectStatusViewStyles;
@@ -14,10 +14,12 @@ const staticProjectStatusViewStyles = StyleSheet.create({
 	statusIcon: {
 		width: 12,
 		height: 12,
-		borderRadius: "100%"
+		borderRadius: "100%",
+		borderWidth: 1,
+		borderColor: colourPalette.separator,
 	},
 	statusText: {
-		color: appColourPalette.text,
+		color: colourPalette.text,
 		padding: 2,
 		paddingLeft: 6
 	}

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { appColourPalette } from "../../appColourPalette";
+import { colourPalette } from "../../colourPalette";
 
 export function useRadioStyles() {
 	return staticRadioStyles;
@@ -15,7 +15,7 @@ const staticRadioStyles = StyleSheet.create({
 		height: 18,
 		borderRadius: "100%",
 		borderWidth: 2,
-		borderColor: appColourPalette.separator,
+		borderColor: colourPalette.separator,
 		justifyContent: "center",
 		alignItems: "center",
 		marginRight: 10
